@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
+import { Toast } from '@heroui/react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
+import BackTop from '@/components/BackTop'
+import FullLoading from '@/components/FullLoading'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -14,9 +17,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
+      <head>
+        <link rel="stylesheet" href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" />
+      </head>
       <body className="bg-background text-foreground">
         <NextThemesProvider attribute="class">
-          {children}
+          <FullLoading>
+            {children}
+          </FullLoading>
+          <BackTop />
+          <Toast.Provider placement="top" />
         </NextThemesProvider>
       </body>
     </html>

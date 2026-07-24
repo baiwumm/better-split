@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "@heroui/styles"; 
+@import "@heroui/styles";
 @custom-variant dark (&:is(.dark *));
 
 /*
@@ -46,6 +46,9 @@
   --surface-tertiary-foreground: oklch(21.03% 0.0000 291.41);
   --warning: oklch(78.19% 0.1585 76.84);
   --warning-foreground: oklch(21.03% 0.0059 76.84);
+  --info: oklch(61.19% 0.2108 259.59);
+  --info-foreground: oklch(99.11% 0 0);
+
 
   /* Border Radius */
   --radius: 0.5rem;
@@ -91,19 +94,31 @@
   --surface-tertiary-foreground: oklch(99.11% 0.0000 291.41);
   --warning: oklch(82.03% 0.1388 80.85);
   --warning-foreground: oklch(21.03% 0.0059 80.85);
+  --info: oklch(61.19% 0.2108 259.59);
+  --info-foreground: oklch(99.11% 0 0);
+}
+
+@theme inline {
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-soft: color-mix(in oklab, var(--info) 15%, transparent);
+  --color-info-soft-hover: color-mix(in oklab, var(--info) 20%, transparent);
 }
 
 @layer base {
   ::-webkit-scrollbar {
     width: 2px;
   }
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     background: var(--scrollbar);
     border-radius: 2px;
   }
+
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar) transparent;
