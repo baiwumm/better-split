@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "@heroui/styles"; 
+@import "./theme-preset.css";
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  :root{
+    --font-sans: 'Maple Mono CN';
+  }
+
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+    border-radius: 2px;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar) transparent;
+  }
+}
