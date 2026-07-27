@@ -1,7 +1,7 @@
 'use client'
 import type { FC } from 'react'
-import { ArrowUp } from '@gravity-ui/icons'
 import { ProgressCircle } from '@heroui/react'
+import { ArrowUp } from 'lucide-react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { useRef, useState } from 'react'
 
@@ -90,7 +90,7 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 6, scale: 0.8 }}
                     transition={{ duration: 0.2 }}
-                    className="text-accent"
+                    className="text-accent size-4"
                   />
                 )
                 : (

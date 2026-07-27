@@ -1,8 +1,8 @@
-import type { Expense, Person, PersonBalance, Transfer } from '../types'
+import type { Expense, Person, PersonBalance, Transfer } from '@/types'
 
 // 生成唯一ID
 export function generateId(): string {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2)
+  return crypto.randomUUID()
 }
 
 // 格式化金额显示

@@ -1,6 +1,6 @@
 import type { FC, SVGProps } from 'react'
-import { Calculator, Check, HouseFill, PaperPlane, Persons, Picture, Plus, Receipt, ShoppingCart } from '@gravity-ui/icons'
 import { Button, Card, cn, Typography, useOverlayState } from '@heroui/react'
+import { Calculator, Check, HouseHeart, Image, Plane, Plus, ReceiptJapaneseYen, ShoppingCart, Users, Utensils } from 'lucide-react'
 import NewGroupModal from '@/components/NewGroupModal'
 import ThemeToggle from '@/components/ThemeToggle'
 
@@ -10,13 +10,14 @@ interface Option {
   icon: FC<SVGProps<SVGSVGElement>>
   bgColor: string
   textColor: string
+  isFill?: boolean
 }
 
 const features: Option[] = [
   {
     title: '智能成员管理',
     desc: '添加成员、自定义头像，智能保护有付款记录的成员数据',
-    icon: Persons,
+    icon: Users,
     bgColor: 'bg-accent-soft',
     textColor: 'text-accent',
   },
@@ -30,7 +31,7 @@ const features: Option[] = [
   {
     title: '一键生成海报',
     desc: '生成精美的分账结果海报，支持高清下载和分享',
-    icon: Picture,
+    icon: Image,
     bgColor: 'bg-info-soft',
     textColor: 'text-info',
   },
@@ -40,16 +41,17 @@ const scenes: Option[] = [
   {
     title: '聚餐聚会',
     desc: '朋友聚餐、生日聚会',
-    icon: Picture,
+    icon: Utensils,
     bgColor: 'bg-warning-soft',
     textColor: 'text-warning',
   },
   {
     title: '旅行出游',
     desc: '团队旅行、自驾游',
-    icon: PaperPlane,
+    icon: Plane,
     bgColor: 'bg-info-soft',
     textColor: 'text-info',
+    isFill: true,
   },
   {
     title: '团购拼单',
@@ -57,11 +59,12 @@ const scenes: Option[] = [
     icon: ShoppingCart,
     bgColor: 'bg-success-soft',
     textColor: 'text-success',
+    isFill: true,
   },
   {
     title: '室友生活',
     desc: '房租水电、日常开销',
-    icon: HouseFill,
+    icon: HouseHeart,
     bgColor: 'bg-accent-soft',
     textColor: 'text-accent',
   },
@@ -77,10 +80,10 @@ const LandingPage: FC = () => {
         <div className="text-center mb-16">
           <div className="relative inline-block mb-4">
             <div className="bg-accent size-20 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg transform hover:scale-105 transition-transform duration-300">
-              <Receipt className="size-10 text-accent-foreground" />
+              <ReceiptJapaneseYen className="size-10 text-accent-foreground" />
             </div>
             <div className="absolute -top-2 -right-2 w-6 h-6 bg-success rounded-full flex items-center justify-center">
-              <Check className="text-success-foreground" />
+              <Check className="size-4 text-success-foreground" />
             </div>
           </div>
           <div className="space-y-4 text-center">
@@ -111,12 +114,12 @@ const LandingPage: FC = () => {
         <div className="p-8">
           <Typography type="h3" align="center">适用场景</Typography>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-            {scenes.map(({ title, desc, icon: Icon, bgColor, textColor }, index) => (
+            {scenes.map(({ title, desc, icon: Icon, bgColor, textColor, isFill }, index) => (
               <div key={index} className="text-center">
                 <div className={cn('size-16 rounded-full flex items-center justify-center mx-auto', bgColor)}>
-                  <Icon className={cn('size-8', textColor)} />
+                  <Icon fill={isFill ? 'currentColor' : 'none'} className={cn('size-8', textColor)} />
                 </div>
-                <Typography type="h5" weight="normal" align="center" className="mt-4">{title}</Typography>
+                <Typography type="h6" align="center" className="mt-4">{title}</Typography>
                 <Typography.Paragraph align="center" color="muted" size="sm">{desc}</Typography.Paragraph>
               </div>
             ))}
