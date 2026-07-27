@@ -1,61 +1,74 @@
-'use client'
-
-import type { FC, FormEvent, SVGProps } from 'react'
-import { Calculator, Check, Persons, Picture, Plus, Receipt } from '@gravity-ui/icons'
-import { Button, Card, cn, FieldError, Form, Input, Label, Modal, TextArea, TextField, Typography, useOverlayState } from '@heroui/react'
-import { useEffect, useRef } from 'react'
+import type { FC, SVGProps } from 'react'
+import { Calculator, Check, HouseFill, PaperPlane, Persons, Picture, Plus, Receipt, ShoppingCart } from '@gravity-ui/icons'
+import { Button, Card, cn, Typography, useOverlayState } from '@heroui/react'
+import NewGroupModal from '@/components/NewGroupModal'
 import ThemeToggle from '@/components/ThemeToggle'
-import { useAppStore } from '@/store/useAppStore'
 
-interface Feature {
+interface Option {
   title: string
   desc: string
   icon: FC<SVGProps<SVGSVGElement>>
-  color: string
+  bgColor: string
+  textColor: string
 }
 
-const features: Feature[] = [
+const features: Option[] = [
   {
     title: '智能成员管理',
     desc: '添加成员、自定义头像，智能保护有付款记录的成员数据',
     icon: Persons,
-    color: 'accent',
+    bgColor: 'bg-accent-soft',
+    textColor: 'text-accent',
   },
   {
     title: '自动分账计算',
     desc: '实时计算每个人的应付应收，使用贪心算法生成最优转账方案',
     icon: Calculator,
-    color: 'success',
+    bgColor: 'bg-success-soft',
+    textColor: 'text-success',
   },
   {
     title: '一键生成海报',
     desc: '生成精美的分账结果海报，支持高清下载和分享',
     icon: Picture,
-    color: 'info',
+    bgColor: 'bg-info-soft',
+    textColor: 'text-info',
+  },
+]
+
+const scenes: Option[] = [
+  {
+    title: '聚餐聚会',
+    desc: '朋友聚餐、生日聚会',
+    icon: Picture,
+    bgColor: 'bg-warning-soft',
+    textColor: 'text-warning',
+  },
+  {
+    title: '旅行出游',
+    desc: '团队旅行、自驾游',
+    icon: PaperPlane,
+    bgColor: 'bg-info-soft',
+    textColor: 'text-info',
+  },
+  {
+    title: '团购拼单',
+    desc: '合买物品、团购优惠',
+    icon: ShoppingCart,
+    bgColor: 'bg-success-soft',
+    textColor: 'text-success',
+  },
+  {
+    title: '室友生活',
+    desc: '房租水电、日常开销',
+    icon: HouseFill,
+    bgColor: 'bg-accent-soft',
+    textColor: 'text-accent',
   },
 ]
 
 const LandingPage: FC = () => {
-  const formRef = useRef<HTMLFormElement>(null)
   const state = useOverlayState()
-  const { createGroup } = useAppStore()
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const data: Record<string, string> = {}
-    formData.forEach((value, key) => {
-      data[key] = value.toString()
-    })
-    createGroup(data.name, data.description)
-    state.close()
-  }
-
-  useEffect(() => {
-    if (!state.isOpen && formRef.current) {
-      formRef.current.reset()
-    }
-  }, [state.isOpen])
   return (
     <div className="min-h-screen">
       <ThemeToggle />
@@ -82,46 +95,36 @@ const LandingPage: FC = () => {
         </div>
         {/* 功能特性展示 */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {features.map(({ title, desc, icon: Icon, color }, index) => (
+          {features.map(({ title, desc, icon: Icon, bgColor, textColor }, index) => (
             <Card key={index} className="backdrop-blur-sm">
-              <div className={cn('size-12 rounded-xl flex items-center justify-center', `bg-${color}-soft`)}>
-                <Icon className={cn('size-6', `text-${color}`)} />
+              <div className={cn('size-12 rounded-xl flex items-center justify-center', bgColor)}>
+                <Icon className={cn('size-6', textColor)} />
               </div>
+              <Card.Header>
+                <Card.Title className="font-bold text-base">{title}</Card.Title>
+                <Card.Description>{desc}</Card.Description>
+              </Card.Header>
             </Card>
           ))}
         </div>
+        {/* 场景示例 */}
+        <div className="p-8">
+          <Typography type="h3" align="center">适用场景</Typography>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+            {scenes.map(({ title, desc, icon: Icon, bgColor, textColor }, index) => (
+              <div key={index} className="text-center">
+                <div className={cn('size-16 rounded-full flex items-center justify-center mx-auto', bgColor)}>
+                  <Icon className={cn('size-8', textColor)} />
+                </div>
+                <Typography type="h5" weight="normal" align="center" className="mt-4">{title}</Typography>
+                <Typography.Paragraph align="center" color="muted" size="sm">{desc}</Typography.Paragraph>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       {/* 弹窗 */}
-      <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
-        <Modal.Container size="lg">
-          <Modal.Dialog>
-            <Modal.CloseTrigger />
-            <Modal.Header>
-              <Modal.Icon className="bg-accent-soft text-accent-soft-foreground">
-                <Receipt className="size-5" />
-              </Modal.Icon>
-              <Modal.Heading>创建分账组</Modal.Heading>
-            </Modal.Header>
-            <Modal.Body>
-              <Form ref={formRef} id="group-form" className="flex flex-col gap-4" onSubmit={onSubmit}>
-                <TextField isRequired name="name">
-                  <Label>分账组名称</Label>
-                  <Input placeholder="例如：三亚旅行、聚餐AA" maxLength={50} variant="secondary" />
-                  <FieldError />
-                </TextField>
-                <TextField name="description">
-                  <Label>描述</Label>
-                  <TextArea placeholder="添加一些描述信息" maxLength={100} variant="secondary" rows={4} />
-                </TextField>
-              </Form>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button slot="close" variant="secondary">取消</Button>
-              <Button type="submit" form="group-form">创建</Button>
-            </Modal.Footer>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
+      <NewGroupModal state={state} />
     </div>
   )
 }
