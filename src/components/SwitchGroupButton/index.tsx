@@ -6,8 +6,12 @@ import { useState } from 'react'
 import DeleteGroupDialog from '@/components/DeleteGroupDialog'
 import { useAppStore } from '@/store/useAppStore'
 
-const SwitchGroupButton: FC = () => {
-  const { currentGroup, groups, switchGroup } = useAppStore()
+interface SwitchGroupButtonProps {
+  currentGroup: Group
+}
+
+const SwitchGroupButton: FC<SwitchGroupButtonProps> = ({ currentGroup }) => {
+  const { groups, switchGroup } = useAppStore()
   const state = useOverlayState()
   const [deleteGroup, setDeleteGroup] = useState<Group | null>(null)
   const deleteState = useOverlayState()
@@ -46,7 +50,7 @@ const SwitchGroupButton: FC = () => {
             <ListBox aria-label="分账组" selectionMode="none" onAction={key => handleSwitchGroup(key as string)}>
               <ListBox.Section>
                 <Header>切换到其他分账组</Header>
-                {groups.filter(g => g.id !== currentGroup?.id).map(group => (
+                {groups.filter(g => g.id !== currentGroup.id).map(group => (
                   <ListBox.Item key={group.id} id={group.id} textValue={group.name}>
                     <div className="flex flex-col gap-1">
                       <Label>{group.name}</Label>

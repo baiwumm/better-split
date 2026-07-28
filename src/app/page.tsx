@@ -16,5 +16,5 @@ export default function Home() {
   if (!currentGroup) {
     return <LandingPage />
   }
-  return <SplitDashboard />
+  return <SplitDashboard currentGroup={currentGroup} />
 }

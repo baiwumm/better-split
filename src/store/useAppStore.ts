@@ -1,4 +1,4 @@
-import type { Expense, Group, Person, SettlementResult } from '@/types'
+import type { Expense, ExpenseFormData, Group, Person, SettlementResult } from '@/types'
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 import { calculateSettlement, generateId, storage } from '@/lib/utils'
@@ -25,23 +25,8 @@ interface AppState {
   removePerson: (personId: string) => { success: boolean, message: string }
 
   // 消费记录管理
-  addExpense: (
-    title: string,
-    amount: number,
-    payerId: string,
-    participants: string[],
-    description?: string,
-    category?: string,
-  ) => Expense | null
-  updateExpense: (
-    expenseId: string,
-    title: string,
-    amount: number,
-    payerId: string,
-    participants: string[],
-    description?: string,
-    category?: string,
-  ) => Expense | null
+  addExpense: (formData: ExpenseFormData) => Expense | null
+  updateExpense: (formData: ExpenseFormData) => Expense | null
   removeExpense: (expenseId: string) => void
 
   // 分账计算
@@ -236,19 +221,14 @@ export const useAppStore = create<AppState>()(devtools((set, get) => ({
   },
 
   // 消费记录管理
-  addExpense: (title, amount, payerId, participants, description, category) => {
+  addExpense: (formData) => {
     const { currentGroup, groups, saveToStorage } = get()
     if (!currentGroup)
       return null
 
     const newExpense: Expense = {
+      ...formData,
       id: generateId(),
-      title,
-      amount,
-      payerId,
-      participants,
-      description,
-      category,
       createdAt: new Date(),
     }
 
@@ -271,14 +251,14 @@ export const useAppStore = create<AppState>()(devtools((set, get) => ({
     return newExpense
   },
 
-  updateExpense: (expenseId, title, amount, payerId, participants, description, category) => {
+  updateExpense: ({ id: expenseId, ...formData }) => {
     const { currentGroup, groups, saveToStorage } = get()
     if (!currentGroup)
       return null
 
     const updatedExpenses = currentGroup.expenses.map(expense =>
       expense.id === expenseId
-        ? { ...expense, title, amount, payerId, participants, description, category }
+        ? { ...expense, ...formData }
         : expense,
     )
 

@@ -84,27 +84,27 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
             <AnimatePresence mode="wait">
               {direction === 'up'
                 ? (
-                  <MotionArrowUp
-                    key="arrow"
-                    initial={{ opacity: 0, y: 6, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.8 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-accent size-4"
-                  />
-                )
+                    <MotionArrowUp
+                      key="arrow"
+                      initial={{ opacity: 0, y: 6, scale: 0.8 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 6, scale: 0.8 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-accent size-4"
+                    />
+                  )
                 : (
-                  <motion.div
-                    key="percent"
-                    initial={{ opacity: 0, y: -6, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: -6, scale: 0.8 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-xs text-muted"
-                  >
-                    {scrollPercentage}
-                  </motion.div>
-                )}
+                    <motion.div
+                      key="percent"
+                      initial={{ opacity: 0, y: -6, scale: 0.8 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -6, scale: 0.8 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-xs text-muted"
+                    >
+                      {scrollPercentage}
+                    </motion.div>
+                  )}
             </AnimatePresence>
           </div>
 

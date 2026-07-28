@@ -11,8 +11,12 @@ import NewGroupModal from '@/components/NewGroupModal'
 import SwitchGroupButton from '@/components/SwitchGroupButton'
 import { useAppStore } from '@/store/useAppStore'
 
-const DashboardHeader: FC = () => {
-  const { currentGroup, groups } = useAppStore()
+interface DashboardHeaderProps {
+  currentGroup: Group
+}
+
+const DashboardHeader: FC<DashboardHeaderProps> = ({ currentGroup }) => {
+  const { groups } = useAppStore()
   const groupState = useOverlayState()
   const deleteState = useOverlayState()
   const [editGroup, setEditGroup] = useState<Group | null>(null)
@@ -86,7 +90,7 @@ const DashboardHeader: FC = () => {
               <Trash2 />
             </Button>
             {/* 切换组 */}
-            <SwitchGroupButton />
+            <SwitchGroupButton currentGroup={currentGroup} />
           </>
         )}
         <Button size="sm" className="hidden sm:flex" onPress={() => groupState.open()}>

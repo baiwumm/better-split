@@ -1,10 +1,7 @@
-'use client'
-
 import type { FC } from 'react'
 import type { Person } from '@/types'
-import { Avatar, Button, Card, toast } from '@heroui/react'
-import { Check, Trash2, X } from 'lucide-react'
-import { useState } from 'react'
+import { Avatar, Card, toast } from '@heroui/react'
+import DeleteConfirmButton from '@/components/DeleteConfirmButton'
 import { useAppStore } from '@/store/useAppStore'
 
 interface PersonCardProps {
@@ -13,12 +10,9 @@ interface PersonCardProps {
 
 const PersonCard: FC<PersonCardProps> = ({ person }) => {
   const { removePerson } = useAppStore()
-  const [showConfirm, setShowConfirm] = useState(false)
-
   const handleConfirmRemove = () => {
     const result = removePerson(person.id)
     toast[result.success ? 'success' : 'danger'](result.message)
-    setShowConfirm(false)
   }
   return (
     <Card>
@@ -34,30 +28,7 @@ const PersonCard: FC<PersonCardProps> = ({ person }) => {
             </Card.Description>
           </Card.Header>
         </div>
-        <div className="flex items-center gap-1">
-          {showConfirm
-            ? (
-              <>
-                <Button size="sm" variant="ghost" isIconOnly className="text-success-soft-foreground hover:bg-success-soft" onPress={handleConfirmRemove}>
-                  <Check />
-                </Button>
-                <Button size="sm" variant="ghost" isIconOnly onPress={() => setShowConfirm(false)}>
-                  <X />
-                </Button>
-              </>
-            )
-            : (
-              <Button
-                size="sm"
-                variant="ghost"
-                isIconOnly
-                className="text-danger-soft-foreground hover:bg-danger-soft"
-                onPress={() => setShowConfirm(true)}
-              >
-                <Trash2 />
-              </Button>
-            )}
-        </div>
+        <DeleteConfirmButton onRemove={handleConfirmRemove} />
       </div>
     </Card>
   )

@@ -69,8 +69,9 @@ export interface PersonFormData {
 }
 
 export interface ExpenseFormData {
+  id?: string
   title: string
-  amount: string
+  amount: number
   payerId: string
   participants: string[]
   description?: string

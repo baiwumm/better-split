@@ -13,7 +13,7 @@ const DESCRIPTION_MAX_LENGTH = 100
 
 interface NewGroupModalProps {
   state: UseOverlayStateReturn
-  group: Group | null
+  group?: Group | null
 }
 
 const NewGroupModal: FC<NewGroupModalProps> = ({ state, group }) => {
