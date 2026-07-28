@@ -3,6 +3,7 @@
 import type { FC, FormEvent } from 'react'
 import { Button, Description, FieldError, Form, InputGroup, Label, Modal, TextField, Typography, useOverlayState } from '@heroui/react'
 import { CircleUserRound, UserRoundPlus, Users } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef } from 'react'
 import { useAppStore } from '@/store/useAppStore'
 import PersonCard from './PersonCard'
@@ -62,11 +63,34 @@ const PersonManagement: FC = () => {
           </div>
         )
         : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {peoples.map(person => (
-              <PersonCard key={person.id} person={person} />
-            ))}
-          </div>
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <AnimatePresence mode="popLayout">
+              {peoples.map(person => (
+                <motion.div
+                  key={person.id}
+                  layout
+                  initial={{
+                    opacity: 0,
+                    y: 10,
+                    filter: 'blur(8px)',
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    filter: 'blur(0px)',
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.95,
+                    filter: 'blur(8px)',
+                  }}
+                  transition={{ duration: 0.5, ease: 'easeOut' }}
+                >
+                  <PersonCard person={person} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
         )}
       {/* 添加成员弹窗 */}
       <Modal.Backdrop isOpen={state.isOpen} onOpenChange={state.setOpen}>
