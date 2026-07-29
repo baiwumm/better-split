@@ -100,9 +100,13 @@
 
 @theme inline {
   --color-info: var(--info);
+  --color-info-hover: color-mix(in oklab,
+      var(--info) 90%,
+      var(--info-foreground) 10%);
   --color-info-foreground: var(--info-foreground);
   --color-info-soft: color-mix(in oklab, var(--info) 15%, transparent);
   --color-info-soft-hover: color-mix(in oklab, var(--info) 20%, transparent);
+  --color-info-soft-foreground: var(--info);
 }
 
 @layer base {

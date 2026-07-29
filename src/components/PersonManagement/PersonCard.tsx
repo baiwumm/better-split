@@ -21,7 +21,7 @@ const PersonCard: FC<PersonCardProps> = ({ person }) => {
       <div className="flex items-center justify-between">
         <div className="flex-1 min-w-0 flex items-center gap-2">
           <Avatar className="shrink-0" color="accent" variant="soft">
-            <Avatar.Fallback>{person.name.slice(-2).toUpperCase()}</Avatar.Fallback>
+            <Avatar.Fallback>{person.name.slice(-1).toUpperCase()}</Avatar.Fallback>
           </Avatar>
           <Card.Header className="flex-1 min-w-0">
             <Card.Title className="truncate">{person.name}</Card.Title>

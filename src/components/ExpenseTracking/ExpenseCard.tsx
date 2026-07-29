@@ -35,7 +35,7 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
             <Icon className="size-5 text-accent-foreground" />
           </div>
           <Card.Header className="min-w-0">
-            <Card.Title className="truncate">
+            <Card.Title className="truncate font-bold text-lg">
               {expense.title}
             </Card.Title>
             <Card.Description>
@@ -63,11 +63,14 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
         {/* 付款人信息 */}
         <div className="flex items-center gap-4">
           <Label>付款人:</Label>
-          <Avatar color="success" variant="soft">
-            <Avatar.Fallback>
-              {payer?.name.slice(-2).toUpperCase()}
-            </Avatar.Fallback>
-          </Avatar>
+          <div className="flex items-center gap-2">
+            <Avatar color="success" variant="soft">
+              <Avatar.Fallback>
+                {payer?.name.slice(-1).toUpperCase()}
+              </Avatar.Fallback>
+            </Avatar>
+            <Label>{payer?.name}</Label>
+          </div>
         </div>
         {/* 参与者信息 */}
         <div className="flex items-center gap-4">
@@ -76,7 +79,7 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
             {participants.slice(0, MAX_PEOPLE_TO_SHOW).map(participant => (
               <Avatar className="ring-2 ring-background" key={participant.id}>
                 <Avatar.Fallback>
-                  {participant.name.slice(-2).toUpperCase()}
+                  {participant.name.slice(-1).toUpperCase()}
                 </Avatar.Fallback>
               </Avatar>
             ))}
@@ -95,23 +98,25 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
       <Card.Footer className="flex-col gap-3 items-start">
         {/* 分摊信息 */}
         <div className="flex items-center justify-between gap-4 w-full">
-          <Description>
-            人均分摊：
-            {formatCurrency(amountPerPerson)}
-          </Description>
+          <div className="flex flex-col gap-2">
+            <Description>
+              人均分摊：
+              {formatCurrency(amountPerPerson)}
+            </Description>
+            {expense.description && (
+              <Description>
+                备注:
+                {' '}
+                {expense.description}
+              </Description>
+            )}
+          </div>
           <Description>
             {participants.length}
             {' '}
             人参与
           </Description>
         </div>
-        {expense.description && (
-          <Description>
-            备注:
-            {' '}
-            {expense.description}
-          </Description>
-        )}
       </Card.Footer>
     </Card>
   )

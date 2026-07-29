@@ -167,7 +167,7 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
                             size="sm"
                             variant="soft"
                           >
-                            <Avatar.Fallback>
+                            <Avatar.Fallback className="text-xs">
                               {selectedItem.name.slice(-1).toUpperCase()}
                             </Avatar.Fallback>
                           </Avatar>
@@ -287,7 +287,7 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
                       >
                         <div className="flex min-w-0 flex-1 items-center gap-2">
                           <Avatar color="accent" variant="soft">
-                            <Avatar.Fallback>{name.slice(-2).toUpperCase()}</Avatar.Fallback>
+                            <Avatar.Fallback>{name.slice(-1).toUpperCase()}</Avatar.Fallback>
                           </Avatar>
                           <Label className="truncate">{name}</Label>
                         </div>

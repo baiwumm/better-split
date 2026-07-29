@@ -103,7 +103,7 @@ const LandingPage: FC = () => {
             <div className="bg-accent mx-auto mb-6 flex size-20 transform items-center justify-center rounded-2xl shadow-lg transition-transform duration-300 hover:scale-105">
               <ReceiptJapaneseYen className="text-accent-foreground size-10" />
             </div>
-            <div className="bg-success absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full">
+            <div className="bg-success absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-full">
               <Check className="text-success-foreground size-4" />
             </div>
           </div>
