@@ -1,7 +1,8 @@
-import type { FC } from 'react'
 import { Tabs } from '@heroui/react'
 import { Monitor, Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
+
+import type { FC } from 'react'
 
 const themes = [
   { key: 'light', icon: Sun },
@@ -16,8 +17,8 @@ const ThemeToggle: FC = () => {
       <Tabs.ListContainer>
         <Tabs.List aria-label="ThemeToggle" className="*:px-1 *:h-6">
           {themes.map(({ key, icon: Icon }) => (
-            <Tabs.Tab key={key} id={key}>
-              <Icon fill="currentColor" className="size-3.5" />
+            <Tabs.Tab id={key} key={key}>
+              <Icon className="size-3.5" fill="currentColor" />
               <Tabs.Indicator />
             </Tabs.Tab>
           ))}

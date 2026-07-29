@@ -1,13 +1,16 @@
 'use client'
 
-import type { FC } from 'react'
-import type { Expense, Group, Person } from '@/types'
 import { Alert, Button, Description, Typography, useOverlayState } from '@heroui/react'
 import { Plus, ReceiptJapaneseYen } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+
 import AddExpenseModal from '@/components/AddExpenseModal'
 import { formatCurrency } from '@/lib/utils'
+
 import ExpenseCard from './ExpenseCard'
+
+import type { Expense, Group, Person } from '@/types'
+import type { FC } from 'react'
 
 interface ExpenseTrackingProps {
   currentGroup: Group
@@ -26,12 +29,6 @@ const ExpenseTracking: FC<ExpenseTrackingProps> = ({ currentGroup, peoples = [] 
     setEditingExpense(expense)
     state.open()
   }
-
-  useEffect(() => {
-    if (!state.isOpen) {
-      setEditingExpense(null)
-    }
-  }, [state.isOpen])
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -47,7 +44,7 @@ const ExpenseTracking: FC<ExpenseTrackingProps> = ({ currentGroup, peoples = [] 
             {formatCurrency(totalAmount)}
           </Description>
         </div>
-        <Button size="sm" isDisabled={!canAddExpense} onPress={() => state.open()}>
+        <Button isDisabled={!canAddExpense} size="sm" onPress={() => state.open()}>
           <Plus />
           添加消费
         </Button>
@@ -79,12 +76,23 @@ const ExpenseTracking: FC<ExpenseTrackingProps> = ({ currentGroup, peoples = [] 
         : (
             <div className="space-y-4">
               {currentGroup.expenses.map(expense => (
-                <ExpenseCard key={expense.id} peoples={peoples} expense={expense} onEdit={handleEditExpense} />
+                <ExpenseCard
+                  expense={expense}
+                  key={expense.id}
+                  peoples={peoples}
+                  onEdit={handleEditExpense}
+                />
               ))}
             </div>
           )}
       {/* 消费表单 */}
-      <AddExpenseModal state={state} peoples={peoples} expense={editingExpense} />
+      <AddExpenseModal
+        expense={editingExpense}
+        key={editingExpense?.id ?? 'create'}
+        peoples={peoples}
+        state={state}
+        onClose={() => setEditingExpense(null)}
+      />
     </div>
   )
 }

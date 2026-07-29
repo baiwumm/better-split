@@ -1,7 +1,9 @@
-import type { Expense, ExpenseFormData, Group, Person, SettlementResult } from '@/types'
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
+
 import { calculateSettlement, generateId, storage } from '@/lib/utils'
+
+import type { Expense, ExpenseFormData, Group, Person, SettlementResult } from '@/types'
 
 interface AppState {
   // 状态

@@ -1,9 +1,10 @@
 'use client'
 
-import type { FC } from 'react'
 import { Button } from '@heroui/react'
 import { Check, Trash2, X } from 'lucide-react'
 import { useState } from 'react'
+
+import type { FC } from 'react'
 
 interface DeleteConfirmButtonProps {
   onRemove: () => void
@@ -22,25 +23,29 @@ const DeleteConfirmButton: FC<DeleteConfirmButtonProps> = ({ onRemove }) => {
         ? (
             <>
               <Button
-                size="sm"
-                variant="ghost"
                 isIconOnly
                 className="text-success-soft-foreground hover:bg-success-soft"
+                size="sm"
+                variant="ghost"
                 onPress={handleConfirmRemove}
               >
                 <Check />
               </Button>
-              <Button size="sm" variant="ghost" isIconOnly onPress={() => setShowConfirm(false)}>
+              <Button
+                isIconOnlyonPress={() => setShowConfirm(false)}
+                size="sm"
+                variant="ghost"
+              >
                 <X />
               </Button>
             </>
           )
         : (
             <Button
-              size="sm"
-              variant="ghost"
               isIconOnly
               className="text-danger-soft-foreground hover:bg-danger-soft"
+              size="sm"
+              variant="ghost"
               onPress={() => setShowConfirm(true)}
             >
               <Trash2 />

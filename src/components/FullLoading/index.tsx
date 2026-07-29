@@ -1,6 +1,7 @@
 'use client'
-import type { FC, ReactNode } from 'react'
 import { Description, Spinner, useIsHydrated } from '@heroui/react'
+
+import type { FC, ReactNode } from 'react'
 
 interface FullLoadingProps {
   children: ReactNode

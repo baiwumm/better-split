@@ -1,8 +1,10 @@
-import type { FC } from 'react'
-import type { Person } from '@/types'
 import { Avatar, Card, toast } from '@heroui/react'
+
 import DeleteConfirmButton from '@/components/DeleteConfirmButton'
 import { useAppStore } from '@/store/useAppStore'
+
+import type { Person } from '@/types'
+import type { FC } from 'react'
 
 interface PersonCardProps {
   person: Person
@@ -18,7 +20,7 @@ const PersonCard: FC<PersonCardProps> = ({ person }) => {
     <Card>
       <div className="flex items-center justify-between">
         <div className="flex-1 min-w-0 flex items-center gap-2">
-          <Avatar color="accent" variant="soft" className="shrink-0">
+          <Avatar className="shrink-0" color="accent" variant="soft">
             <Avatar.Fallback>{person.name.slice(-2).toUpperCase()}</Avatar.Fallback>
           </Avatar>
           <Card.Header className="flex-1 min-w-0">

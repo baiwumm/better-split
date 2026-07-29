@@ -1,9 +1,12 @@
-import type { Metadata } from 'next'
+import './globals.css'
+
 import { Toast } from '@heroui/react'
 import { ThemeProvider as NextThemesProvider } from 'next-themes'
+
 import BackTop from '@/components/BackTop'
 import FullLoading from '@/components/FullLoading'
-import './globals.css'
+
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -16,9 +19,9 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
+    <html suppressHydrationWarning lang="zh-CN">
       <head>
-        <link rel="stylesheet" href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" />
+        <link href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" rel="stylesheet" />
       </head>
       <body className="bg-background text-foreground">
         <NextThemesProvider attribute="class">

@@ -1,11 +1,13 @@
-import type { FC } from 'react'
-import type { Expense, Person } from '@/types'
 import { Avatar, Button, Card, Description, Label, Separator, Typography } from '@heroui/react'
 import { PenLine, ReceiptJapaneseYen } from 'lucide-react'
-import { categories } from '@/components/AddExpenseModal'
+
 import DeleteConfirmButton from '@/components/DeleteConfirmButton'
+import { categories } from '@/lib/constants'
 import { formatCurrency, formatDate } from '@/lib/utils'
 import { useAppStore } from '@/store/useAppStore'
+
+import type { Expense, Person } from '@/types'
+import type { FC } from 'react'
 
 const MAX_PEOPLE_TO_SHOW = 3
 
@@ -46,10 +48,10 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
             {formatCurrency(expense.amount)}
           </Typography>
           <Button
-            size="sm"
             isIconOnly
-            variant="ghost"
             className="shrink-0"
+            size="sm"
+            variant="ghost"
             onPress={() => onEdit(expense)}
           >
             <PenLine />
@@ -61,7 +63,7 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
         {/* 付款人信息 */}
         <div className="flex items-center gap-4">
           <Label>付款人:</Label>
-          <Avatar variant="soft" color="success">
+          <Avatar color="success" variant="soft">
             <Avatar.Fallback>
               {payer?.name.slice(-2).toUpperCase()}
             </Avatar.Fallback>
@@ -72,7 +74,7 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
           <Label>参与者:</Label>
           <div className="flex -space-x-1">
             {participants.slice(0, MAX_PEOPLE_TO_SHOW).map(participant => (
-              <Avatar key={participant.id} className="ring-2 ring-background">
+              <Avatar className="ring-2 ring-background" key={participant.id}>
                 <Avatar.Fallback>
                   {participant.name.slice(-2).toUpperCase()}
                 </Avatar.Fallback>

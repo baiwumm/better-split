@@ -1,9 +1,10 @@
 'use client'
-import type { FC } from 'react'
 import { ProgressCircle } from '@heroui/react'
 import { ArrowUp } from 'lucide-react'
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react'
 import { useRef, useState } from 'react'
+
+import type { FC } from 'react'
 
 const MotionProgressCircle = motion.create(ProgressCircle)
 const MotionArrowUp = motion.create(ArrowUp)
@@ -19,8 +20,8 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
   const [visible, setVisible] = useState(false)
   const [direction, setDirection] = useState<'up' | 'down'>('down')
 
-  const lastScrollY = useRef(0)
-  const lastUpdate = useRef(0)
+  const lastScrollYRef = useRef(0)
+  const lastUpdateRef = useRef(0)
 
   // 滚动百分比
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
@@ -34,10 +35,10 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
     const now = Date.now()
 
     // 降低更新频率
-    if (now - lastUpdate.current < 80)
+    if (now - lastUpdateRef.current < 80)
       return
 
-    lastUpdate.current = now
+    lastUpdateRef.current = now
 
     setVisible((prev) => {
       const next = latest > visibilityHeight
@@ -46,14 +47,14 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
 
     const DELTA = 4
 
-    if (latest - lastScrollY.current > DELTA) {
+    if (latest - lastScrollYRef.current > DELTA) {
       setDirection(prev => (prev === 'down' ? prev : 'down'))
     }
-    else if (lastScrollY.current - latest > DELTA) {
+    else if (lastScrollYRef.current - latest > DELTA) {
       setDirection(prev => (prev === 'up' ? prev : 'up'))
     }
 
-    lastScrollY.current = latest
+    lastScrollYRef.current = latest
   })
 
   // 回到顶部
@@ -68,16 +69,16 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
     <AnimatePresence>
       {visible && (
         <MotionProgressCircle
-          aria-label="回到顶部"
-          value={scrollPercentage}
-          color="accent"
-          size="lg"
-          className="fixed right-5 bottom-5 z-50 cursor-pointer"
-          onClick={scrollToTop}
-          initial={{ opacity: 0, y: 20, scale: 0.6 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
+          aria-label="回到顶部"
+          className="fixed right-5 bottom-5 z-50 cursor-pointer"
+          color="accent"
           exit={{ opacity: 0, y: 20, scale: 0.6 }}
+          initial={{ opacity: 0, y: 20, scale: 0.6 }}
+          size="lg"
           transition={{ duration: 0.25 }}
+          value={scrollPercentage}
+          onClick={scrollToTop}
         >
           {/* 中间内容 */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -85,22 +86,22 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
               {direction === 'up'
                 ? (
                     <MotionArrowUp
-                      key="arrow"
-                      initial={{ opacity: 0, y: 6, scale: 0.8 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 6, scale: 0.8 }}
-                      transition={{ duration: 0.2 }}
                       className="text-accent size-4"
+                      exit={{ opacity: 0, y: 6, scale: 0.8 }}
+                      initial={{ opacity: 0, y: 6, scale: 0.8 }}
+                      key="arrow"
+                      transition={{ duration: 0.2 }}
                     />
                   )
                 : (
                     <motion.div
-                      key="percent"
-                      initial={{ opacity: 0, y: -6, scale: 0.8 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -6, scale: 0.8 }}
-                      transition={{ duration: 0.2 }}
                       className="text-xs text-muted"
+                      exit={{ opacity: 0, y: -6, scale: 0.8 }}
+                      initial={{ opacity: 0, y: -6, scale: 0.8 }}
+                      key="percent"
+                      transition={{ duration: 0.2 }}
                     >
                       {scrollPercentage}
                     </motion.div>

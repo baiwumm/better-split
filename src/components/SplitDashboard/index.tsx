@@ -1,9 +1,10 @@
-import type { FC } from 'react'
-import type { Group } from '@/types'
 import DashboardHeader from '@/components/DashboardHeader'
 import ExpenseTracking from '@/components/ExpenseTracking'
 import PersonManagement from '@/components/PersonManagement'
 import ThemeToggle from '@/components/ThemeToggle'
+
+import type { Group } from '@/types'
+import type { FC } from 'react'
 
 interface SplitDashboardProps {
   currentGroup: Group

@@ -1,17 +1,25 @@
-import type { FC } from 'react'
 import { AlertDialog, Button, Surface, Typography } from '@heroui/react'
 import { Eraser } from 'lucide-react'
+
 import { useAppStore } from '@/store/useAppStore'
+
+import type { FC } from 'react'
 
 const ClearDataButton: FC = () => {
   const { clearAllData } = useAppStore()
   return (
     <AlertDialog>
-      <Button variant="danger" size="sm" className="hidden sm:flex">
+      <Button className="hidden sm:flex" size="sm" variant="danger">
         <Eraser />
         清空数据
       </Button>
-      <Button variant="danger" size="sm" isIconOnly className="sm:hidden" aria-label="清空数据">
+      <Button
+        aria-label="清空数据"
+        isIconOnly
+        className="sm:hidden"
+        size="sm"
+        variant="danger"
+      >
         <Eraser />
       </Button>
       <AlertDialog.Backdrop>
@@ -24,8 +32,8 @@ const ClearDataButton: FC = () => {
             </AlertDialog.Header>
             <AlertDialog.Body className="space-y-4">
               <p>此操作无法撤销</p>
-              <Surface variant="transparent" className="bg-warning-soft border-warning text-warning rounded-3xl p-4">
-                <Typography type="h6" className="text-warning-soft-foreground mb-1">以下数据将被永久删除：</Typography>
+              <Surface className="bg-warning-soft border-warning text-warning rounded-3xl p-4" variant="transparent">
+                <Typography className="text-warning-soft-foreground mb-1" type="h6">以下数据将被永久删除：</Typography>
                 <ul className="text-sm text-warning-soft-foreground space-y-1 list-inside list-disc">
                   <li>所有分账组信息</li>
                   <li>所有成员信息</li>

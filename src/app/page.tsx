@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+
 import LandingPage from '@/components/LandingPage'
 import SplitDashboard from '@/components/SplitDashboard'
 import { useAppStore } from '@/store/useAppStore'

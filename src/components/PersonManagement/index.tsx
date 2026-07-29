@@ -1,13 +1,16 @@
 'use client'
 
-import type { FC, FormEvent } from 'react'
-import type { Person } from '@/types'
 import { Button, Description, FieldError, Form, InputGroup, Label, Modal, TextField, Typography, useOverlayState } from '@heroui/react'
 import { CircleUserRound, UserRoundPlus, Users } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useRef } from 'react'
+
 import { useAppStore } from '@/store/useAppStore'
+
 import PersonCard from './PersonCard'
+
+import type { Person } from '@/types'
+import type { FC, FormEvent } from 'react'
 
 interface PersonManagementProps {
   peoples: Person[]
@@ -70,13 +73,7 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
               <AnimatePresence mode="popLayout">
                 {peoples.map(person => (
                   <motion.div
-                    key={person.id}
                     layout
-                    initial={{
-                      opacity: 0,
-                      y: 10,
-                      filter: 'blur(8px)',
-                    }}
                     animate={{
                       opacity: 1,
                       y: 0,
@@ -87,6 +84,12 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
                       scale: 0.95,
                       filter: 'blur(8px)',
                     }}
+                    initial={{
+                      opacity: 0,
+                      y: 10,
+                      filter: 'blur(8px)',
+                    }}
+                    key={person.id}
                     transition={{ duration: 0.5, ease: 'easeOut' }}
                   >
                     <PersonCard person={person} />
@@ -107,7 +110,12 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
               <Modal.Heading className="font-bold text-lg">添加成员</Modal.Heading>
             </Modal.Header>
             <Modal.Body>
-              <Form ref={formRef} id="person-form" className="flex flex-col gap-4" onSubmit={onSubmit}>
+              <Form
+                className="flex flex-col gap-4"
+                id="person-form"
+                ref={formRef}
+                onSubmit={onSubmit}
+              >
                 <TextField
                   isRequired
                   name="name"
@@ -120,7 +128,7 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
                 >
                   <Label>姓名</Label>
                   <InputGroup variant="secondary">
-                    <InputGroup.Input aria-describedby="成员姓名" placeholder="输入成员姓名" maxLength={20} />
+                    <InputGroup.Input aria-describedby="成员姓名" maxLength={20} placeholder="输入成员姓名" />
                   </InputGroup>
                   <FieldError />
                 </TextField>
@@ -128,7 +136,7 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
             </Modal.Body>
             <Modal.Footer>
               <Button slot="close" variant="secondary">取消</Button>
-              <Button type="submit" form="person-form">
+              <Button form="person-form" type="submit">
                 添加
               </Button>
             </Modal.Footer>

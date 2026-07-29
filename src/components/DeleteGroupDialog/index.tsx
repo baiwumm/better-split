@@ -1,11 +1,13 @@
-import type { UseOverlayStateReturn } from '@heroui/react'
-import type { FC } from 'react'
-import type { Group } from '@/types'
 import { AlertDialog, Button, Surface, toast, Typography } from '@heroui/react'
-import { useEffect, useState } from 'react'
+
 import { useAppStore } from '@/store/useAppStore'
 
+import type { Group } from '@/types'
+import type { UseOverlayStateReturn } from '@heroui/react'
+import type { FC } from 'react'
+
 interface GroupInfo {
+  id: string
   label: string
   value?: string | number
   suffix?: string
@@ -17,31 +19,24 @@ interface DeleteGroupDialogProps {
 }
 
 const DeleteGroupDialog: FC<DeleteGroupDialogProps> = ({ state, group }) => {
-  const { removeGroup, groups } = useAppStore()
-  const [groupSnapshot, setGroupSnapshot] = useState<Group | null>(null)
+  const { removeGroup } = useAppStore()
 
-  useEffect(() => {
-    if (state.isOpen && group) {
-      setGroupSnapshot(group)
-    }
-  }, [state.isOpen, group])
-
-  if (!groupSnapshot || !groups.length) {
+  if (!group) {
     return null
   }
 
-  const activeMemberCount = groupSnapshot.members.filter(m => !m.isDeleted).length
-  const expenseCount = groupSnapshot.expenses.length
+  const activeMemberCount = group.members.filter(m => !m.isDeleted).length
+  const expenseCount = group.expenses.length
 
   const groupInfo: GroupInfo[] = [
-    { label: '分账组名称', value: groupSnapshot.name },
-    { label: '描述', value: groupSnapshot.description },
-    { label: '成员数量', value: activeMemberCount, suffix: '人' },
-    { label: '消费记录', value: expenseCount, suffix: '条' },
+    { id: 'name', label: '分账组名称', value: group.name },
+    { id: 'description', label: '描述', value: group.description },
+    { id: 'activeMemberCount', label: '成员数量', value: activeMemberCount, suffix: '人' },
+    { id: 'expenseCount', label: '消费记录', value: expenseCount, suffix: '条' },
   ]
 
   const onConfirm = () => {
-    const result = removeGroup(groupSnapshot.id)
+    const result = removeGroup(group.id)
     toast[result.success ? 'success' : 'danger'](result.message)
   }
   return (
@@ -60,11 +55,11 @@ const DeleteGroupDialog: FC<DeleteGroupDialogProps> = ({ state, group }) => {
               ，且无法恢复。
             </p>
             {/* 分账组信息 */}
-            <Surface variant="transparent" className="bg-danger-soft border-danger text-danger rounded-3xl p-4">
-              <Typography type="h6" className="text-danger-soft-foreground mb-1">即将删除的分账组：</Typography>
+            <Surface className="bg-danger-soft border-danger text-danger rounded-3xl p-4" variant="transparent">
+              <Typography className="text-danger-soft-foreground mb-1" type="h6">即将删除的分账组：</Typography>
               <div className="space-y-1">
-                {groupInfo.map(({ label, value, suffix }, index) => (
-                  <Typography.Paragraph key={index} size="sm" className="text-danger-soft-foreground">
+                {groupInfo.map(({ id, label, value, suffix }) => (
+                  <Typography.Paragraph className="text-danger-soft-foreground" key={id} size="sm">
                     {label}
                     ：
                     {value}
@@ -75,8 +70,8 @@ const DeleteGroupDialog: FC<DeleteGroupDialogProps> = ({ state, group }) => {
             </Surface>
 
             {/* 详细说明 */}
-            <Surface variant="transparent" className="bg-warning-soft border-warning text-warning rounded-3xl p-4">
-              <Typography type="h6" className="text-warning-soft-foreground mb-1">删除后将丢失：</Typography>
+            <Surface className="bg-warning-soft border-warning text-warning rounded-3xl p-4" variant="transparent">
+              <Typography className="text-warning-soft-foreground mb-1" type="h6">删除后将丢失：</Typography>
               <ul className="text-sm text-warning-soft-foreground space-y-1 list-inside list-disc">
                 <li>所有成员信息</li>
                 <li>所有消费记录</li>
