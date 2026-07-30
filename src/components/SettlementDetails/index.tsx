@@ -90,7 +90,6 @@ const SettlementDetails: FC<SettlementDetailsProps> = ({ currentGroup, peoples =
                       return (
                         <MotionCard
                           key={balance.personId}
-                          layout
                           animate={{
                             opacity: 1,
                             y: 0,
@@ -106,12 +105,13 @@ const SettlementDetails: FC<SettlementDetailsProps> = ({ currentGroup, peoples =
                             y: 10,
                             filter: 'blur(8px)',
                           }}
+                          layout
                           transition={{ duration: 0.5, delay: 0.1 * index, ease: 'easeOut' }}
                           className="w-full"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1 min-w-0 flex items-center gap-2">
-                              <Avatar className="shrink-0" color="accent" variant="soft">
+                              <Avatar color="accent" variant="soft" className="shrink-0">
                                 <Avatar.Fallback>{getPersonName(balance.personId).slice(-1).toUpperCase()}</Avatar.Fallback>
                               </Avatar>
                               <Card.Header className="flex-1 min-w-0">
@@ -178,7 +178,6 @@ const SettlementDetails: FC<SettlementDetailsProps> = ({ currentGroup, peoples =
                               {settlementResult.optimalTransfers.map((transfer, index) => (
                                 <MotionSurface
                                   key={`${transfer.fromPersonId}-${transfer.toPersonId}`}
-                                  layout
                                   animate={{
                                     opacity: 1,
                                     y: 0,
@@ -194,6 +193,7 @@ const SettlementDetails: FC<SettlementDetailsProps> = ({ currentGroup, peoples =
                                     y: 10,
                                     filter: 'blur(8px)',
                                   }}
+                                  layout
                                   transition={{ duration: 0.5, delay: 0.1 * index, ease: 'easeOut' }}
                                   className="rounded-lg p-3"
                                 >

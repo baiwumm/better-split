@@ -9,16 +9,16 @@ const ClearDataButton: FC = () => {
   const { clearAllData } = useAppStore()
   return (
     <AlertDialog>
-      <Button className="hidden sm:flex" size="sm" variant="danger">
+      <Button size="sm" variant="danger" className="hidden sm:flex">
         <Eraser />
         清空数据
       </Button>
       <Button
         aria-label="清空数据"
-        isIconOnly
-        className="sm:hidden"
         size="sm"
         variant="danger"
+        isIconOnly
+        className="sm:hidden"
       >
         <Eraser />
       </Button>
@@ -32,8 +32,8 @@ const ClearDataButton: FC = () => {
             </AlertDialog.Header>
             <AlertDialog.Body className="space-y-4">
               <p>此操作无法撤销</p>
-              <Surface className="bg-warning-soft border-warning text-warning rounded-3xl p-4" variant="transparent">
-                <Typography className="text-warning-soft-foreground mb-1" type="h6">以下数据将被永久删除：</Typography>
+              <Surface variant="transparent" className="bg-warning-soft border-warning text-warning rounded-3xl p-4">
+                <Typography type="h6" className="text-warning-soft-foreground mb-1">以下数据将被永久删除：</Typography>
                 <ul className="text-sm text-warning-soft-foreground space-y-1 list-inside list-disc">
                   <li>所有分账组信息</li>
                   <li>所有成员信息</li>
@@ -43,8 +43,8 @@ const ClearDataButton: FC = () => {
               </Surface>
             </AlertDialog.Body>
             <AlertDialog.Footer>
-              <Button slot="close" variant="tertiary">取消</Button>
-              <Button slot="close" variant="danger" onPress={clearAllData}>
+              <Button variant="tertiary" slot="close">取消</Button>
+              <Button variant="danger" slot="close" onPress={clearAllData}>
                 确认删除
               </Button>
             </AlertDialog.Footer>

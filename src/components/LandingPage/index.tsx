@@ -108,14 +108,14 @@ const LandingPage: FC = () => {
             </div>
           </div>
           <div className="space-y-4 text-center">
-            <Typography align="center" type="h1">
+            <Typography type="h1" align="center">
               {process.env.NEXT_PUBLIC_APP_NAME}
             </Typography>
             <Typography
-              align="center"
-              className="text-accent"
               type="h2"
+              align="center"
               weight="normal"
+              className="text-accent"
             >
               {process.env.NEXT_PUBLIC_APP_TITLE}
             </Typography>
@@ -123,7 +123,7 @@ const LandingPage: FC = () => {
               {process.env.NEXT_PUBLIC_APP_DESC}
             </Typography.Paragraph>
           </div>
-          <Button className="mt-8" size="lg" onPress={() => state.open()}>
+          <Button size="lg" onPress={() => state.open()} className="mt-8">
             <Plus />
             开始创建分账组
           </Button>
@@ -131,7 +131,7 @@ const LandingPage: FC = () => {
         {/* 功能特性展示 */}
         <div className="mb-16 grid gap-8 md:grid-cols-3">
           {features.map(({ id, title, desc, icon: Icon, bgColor, textColor }) => (
-            <Card className="backdrop-blur-sm" key={id}>
+            <Card key={id} className="backdrop-blur-sm">
               <div className={cn('flex size-12 items-center justify-center rounded-xl', bgColor)}>
                 <Icon className={cn('size-6', textColor)} />
               </div>
@@ -144,12 +144,12 @@ const LandingPage: FC = () => {
         </div>
         {/* 场景示例 */}
         <div className="p-8">
-          <Typography align="center" type="h3">
+          <Typography type="h3" align="center">
             适用场景
           </Typography>
           <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {scenes.map(({ id, title, desc, icon: Icon, bgColor, textColor, isFill }) => (
-              <div className="text-center" key={id}>
+              <div key={id} className="text-center">
                 <div
                   className={cn(
                     'mx-auto flex size-16 items-center justify-center rounded-full',
@@ -157,14 +157,14 @@ const LandingPage: FC = () => {
                   )}
                 >
                   <Icon
-                    className={cn('size-8', textColor)}
                     fill={isFill ? 'currentColor' : 'none'}
+                    className={cn('size-8', textColor)}
                   />
                 </div>
-                <Typography align="center" className="mt-4" type="h6">
+                <Typography type="h6" align="center" className="mt-4">
                   {title}
                 </Typography>
-                <Typography.Paragraph align="center" color="muted" size="sm">
+                <Typography.Paragraph color="muted" size="sm" align="center">
                   {desc}
                 </Typography.Paragraph>
               </div>

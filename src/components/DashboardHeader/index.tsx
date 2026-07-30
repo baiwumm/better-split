@@ -28,7 +28,7 @@ const DashboardHeader: FC<DashboardHeaderProps> = ({ currentGroup }) => {
     groupState.open()
   }
   return (
-    <div className="sticky top-0 z-20 backdrop-blur-sm p-4 max-w-5xl mx-auto flex justify-between items-center gap-4" id="header">
+    <div id="header" className="sticky top-0 z-20 backdrop-blur-sm p-4 max-w-5xl mx-auto flex justify-between items-center gap-4">
       {/* 左侧：当前分账组 */}
       <div className="flex-1 min-w-0 flex items-center gap-2">
         <div className="bg-accent size-11 rounded-lg flex items-center justify-center shrink-0">
@@ -37,24 +37,24 @@ const DashboardHeader: FC<DashboardHeaderProps> = ({ currentGroup }) => {
         <div className="flex items-start gap-2 min-w-0">
           <AnimatePresence mode="wait">
             <motion.div
+              key={currentGroup.id}
               animate={{ opacity: 1, y: 0 }}
-              className="flex-1 min-w-0"
               exit={{ opacity: 0, y: -6 }}
               initial={{ opacity: 0, y: 6 }}
-              key={currentGroup.id}
               transition={{
                 duration: 0.2,
               }}
+              className="flex-1 min-w-0"
             >
-              <Typography truncate type="h6">
+              <Typography type="h6" truncate>
                 {currentGroup.name}
               </Typography>
 
               {currentGroup.description && (
                 <Typography.Paragraph
-                  truncate
                   color="muted"
                   size="xs"
+                  truncate
                 >
                   {currentGroup.description}
                 </Typography.Paragraph>
@@ -63,11 +63,11 @@ const DashboardHeader: FC<DashboardHeaderProps> = ({ currentGroup }) => {
           </AnimatePresence>
 
           <Button
-            isIconOnly
-            className="shrink-0"
             size="sm"
             variant="ghost"
+            isIconOnly
             onPress={() => handleEditGroup(currentGroup)}
+            className="shrink-0"
           >
             <PenLine />
           </Button>
@@ -81,20 +81,20 @@ const DashboardHeader: FC<DashboardHeaderProps> = ({ currentGroup }) => {
           <>
             {/* 删除当前分账组 */}
             <Button
-              className="hidden sm:flex"
               size="sm"
               variant="danger-soft"
               onPress={() => deleteState.open()}
+              className="hidden sm:flex"
             >
               <Trash2 />
               删除当前组
             </Button>
             <Button
-              isIconOnly
-              className="sm:hidden"
               size="sm"
               variant="danger-soft"
+              isIconOnly
               onPress={() => deleteState.open()}
+              className="sm:hidden"
             >
               <Trash2 />
             </Button>
@@ -102,15 +102,15 @@ const DashboardHeader: FC<DashboardHeaderProps> = ({ currentGroup }) => {
             <SwitchGroupButton currentGroup={currentGroup} />
           </>
         )}
-        <Button className="hidden sm:flex" size="sm" onPress={() => groupState.open()}>
+        <Button size="sm" onPress={() => groupState.open()} className="hidden sm:flex">
           <Plus />
           新建组
         </Button>
         <Button
-          isIconOnly
-          className="sm:hidden"
           size="sm"
+          isIconOnly
           onPress={() => groupState.open()}
+          className="sm:hidden"
         >
           <Plus />
         </Button>

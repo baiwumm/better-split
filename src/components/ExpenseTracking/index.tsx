@@ -45,7 +45,7 @@ const ExpenseTracking: FC<ExpenseTrackingProps> = ({ currentGroup, peoples = [] 
             {formatCurrency(totalAmount)}
           </Description>
         </div>
-        <Button isDisabled={!canAddExpense} size="sm" onPress={() => state.open()}>
+        <Button size="sm" isDisabled={!canAddExpense} onPress={() => state.open()}>
           <Plus />
           添加消费
         </Button>
@@ -79,7 +79,7 @@ const ExpenseTracking: FC<ExpenseTrackingProps> = ({ currentGroup, peoples = [] 
               <AnimatePresence mode="popLayout">
                 {currentGroup.expenses.map((expense, index) => (
                   <motion.div
-                    layout
+                    key={expense.id}
                     animate={{
                       opacity: 1,
                       y: 0,
@@ -95,7 +95,7 @@ const ExpenseTracking: FC<ExpenseTrackingProps> = ({ currentGroup, peoples = [] 
                       y: 10,
                       filter: 'blur(8px)',
                     }}
-                    key={expense.id}
+                    layout
                     transition={{ duration: 0.5, delay: 0.2 * index, ease: 'easeOut' }}
                   >
                     <ExpenseCard expense={expense} peoples={peoples} onEdit={handleEditExpense} />
@@ -106,8 +106,8 @@ const ExpenseTracking: FC<ExpenseTrackingProps> = ({ currentGroup, peoples = [] 
           )}
       {/* 消费表单 */}
       <AddExpenseModal
-        expense={editingExpense}
         key={editingExpense?.id ?? `create-${peoples.length}`}
+        expense={editingExpense}
         peoples={peoples}
         state={state}
         onClose={() => setEditingExpense(null)}

@@ -23,18 +23,19 @@ const DeleteConfirmButton: FC<DeleteConfirmButtonProps> = ({ onRemove }) => {
         ? (
             <>
               <Button
-                isIconOnly
-                className="text-success-soft-foreground hover:bg-success-soft"
                 size="sm"
                 variant="ghost"
+                isIconOnly
                 onPress={handleConfirmRemove}
+                className="text-success-soft-foreground hover:bg-success-soft"
               >
                 <Check />
               </Button>
               <Button
-                isIconOnlyonPress={() => setShowConfirm(false)}
                 size="sm"
                 variant="ghost"
+                isIconOnly
+                onPress={() => setShowConfirm(false)}
               >
                 <X />
               </Button>
@@ -42,11 +43,11 @@ const DeleteConfirmButton: FC<DeleteConfirmButtonProps> = ({ onRemove }) => {
           )
         : (
             <Button
-              isIconOnly
-              className="text-danger-soft-foreground hover:bg-danger-soft"
               size="sm"
               variant="ghost"
+              isIconOnly
               onPress={() => setShowConfirm(true)}
+              className="text-danger-soft-foreground hover:bg-danger-soft"
             >
               <Trash2 />
             </Button>

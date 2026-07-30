@@ -48,7 +48,7 @@ export default antfu({
     // 排序具名 export
     // 例如 export { Button, Avatar } 按名称排序
     'perfectionist/sort-named-exports': [
-      'warn',
+      'error',
       {
         order: 'asc',
         type: 'alphabetical',
@@ -58,10 +58,81 @@ export default antfu({
     // 排序 import 中的具名导入
     // 例如 import { useEffect, useState } from 'react'
     'perfectionist/sort-named-imports': [
-      'warn',
+      'error',
       {
         order: 'asc',
         type: 'alphabetical',
+      },
+    ],
+
+    // 排序模块
+    'perfectionist/sort-modules': [
+      'error',
+      {
+        order: 'asc',
+        type: 'alphabetical',
+      },
+    ],
+
+    'perfectionist/sort-jsx-props': [
+      'error',
+      {
+        type: 'alphabetical',
+        order: 'asc',
+        customGroups: [
+          {
+            // React 特殊属性
+            groupName: 'react',
+            elementNamePattern: '^(key|ref)$',
+          },
+          {
+            // 无障碍属性
+            // 例如 aria-label、aria-describedby
+            groupName: 'aria',
+            elementNamePattern: '^aria-',
+          },
+          {
+            // HTML 原生属性
+            // 例如 id、role、name、type
+            groupName: 'html',
+            elementNamePattern: '^(id|role|name|type|title)$',
+          },
+          {
+            // UI 组件常用属性
+            // 例如 variant="outline" size="sm"
+            groupName: 'ui',
+            elementNamePattern: '^(variant|size|color|radius)$',
+          },
+          {
+            // 状态类属性
+            // 例如 isDisabled、isLoading
+            groupName: 'state',
+            elementNamePattern: '^(is|has)[A-Z]',
+          },
+          {
+            // 事件回调
+            // 例如 onClick、onChange
+            groupName: 'events',
+            elementNamePattern: '^on[A-Z]',
+          },
+          {
+            // 样式相关
+            // 放最后方便扫一眼
+            groupName: 'style',
+            elementNamePattern: '^(className|style)$',
+          },
+        ],
+
+        groups: [
+          'react',
+          'aria',
+          'html',
+          'ui',
+          'state',
+          'unknown',
+          'events',
+          'style',
+        ],
       },
     ],
 

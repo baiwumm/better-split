@@ -69,16 +69,16 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
     <AnimatePresence>
       {visible && (
         <MotionProgressCircle
-          animate={{ opacity: 1, y: 0, scale: 1 }}
           aria-label="回到顶部"
-          className="fixed right-5 bottom-5 z-50 cursor-pointer"
           color="accent"
+          size="lg"
+          animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.6 }}
           initial={{ opacity: 0, y: 20, scale: 0.6 }}
-          size="lg"
           transition={{ duration: 0.25 }}
           value={scrollPercentage}
           onClick={scrollToTop}
+          className="fixed right-5 bottom-5 z-50 cursor-pointer"
         >
           {/* 中间内容 */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -86,22 +86,22 @@ const BackTop: FC<BackTopProps> = ({ visibilityHeight = 150 }) => {
               {direction === 'up'
                 ? (
                     <MotionArrowUp
+                      key="arrow"
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      className="text-accent size-4"
                       exit={{ opacity: 0, y: 6, scale: 0.8 }}
                       initial={{ opacity: 0, y: 6, scale: 0.8 }}
-                      key="arrow"
                       transition={{ duration: 0.2 }}
+                      className="text-accent size-4"
                     />
                   )
                 : (
                     <motion.div
+                      key="percent"
                       animate={{ opacity: 1, y: 0, scale: 1 }}
-                      className="text-xs text-muted"
                       exit={{ opacity: 0, y: -6, scale: 0.8 }}
                       initial={{ opacity: 0, y: -6, scale: 0.8 }}
-                      key="percent"
                       transition={{ duration: 0.2 }}
+                      className="text-xs text-muted"
                     >
                       {scrollPercentage}
                     </motion.div>

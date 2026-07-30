@@ -1,15 +1,5 @@
 import type { Expense, Person, PersonBalance, Transfer } from '@/types'
 
-// 生成唯一ID
-export function generateId(): string {
-  return crypto.randomUUID()
-}
-
-// 格式化金额显示
-export function formatCurrency(amount: number): string {
-  return `¥${amount.toFixed(2)}`
-}
-
 // 计算分账结果
 export function calculateSettlement(expenses: Expense[], people: Person[]): { personBalances: PersonBalance[], optimalTransfers: Transfer[] } {
   // 只为活跃用户（未删除）创建余额记录
@@ -61,6 +51,16 @@ export function calculateSettlement(expenses: Expense[], people: Person[]): { pe
   const optimalTransfers = generateOptimalTransfers(personBalances)
 
   return { personBalances, optimalTransfers }
+}
+
+// 格式化金额显示
+export function formatCurrency(amount: number): string {
+  return `¥${amount.toFixed(2)}`
+}
+
+// 生成唯一ID
+export function generateId(): string {
+  return crypto.randomUUID()
 }
 
 // 生成最优转账方案（贪心算法）

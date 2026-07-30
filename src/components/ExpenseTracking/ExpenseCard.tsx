@@ -48,11 +48,11 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
             {formatCurrency(expense.amount)}
           </Typography>
           <Button
-            isIconOnly
-            className="shrink-0"
             size="sm"
             variant="ghost"
+            isIconOnly
             onPress={() => onEdit(expense)}
+            className="shrink-0"
           >
             <PenLine />
           </Button>
@@ -77,7 +77,7 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
           <Label className="shrink-0">参与者:</Label>
           <div className="flex-1 min-w-0 flex -space-x-1">
             {participants.slice(0, MAX_PEOPLE_TO_SHOW).map(participant => (
-              <Avatar className="ring-2 ring-background" key={participant.id}>
+              <Avatar key={participant.id} className="ring-2 ring-background">
                 <Avatar.Fallback>
                   {participant.name.slice(-1).toUpperCase()}
                 </Avatar.Fallback>

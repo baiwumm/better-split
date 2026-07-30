@@ -71,12 +71,12 @@ const NewGroupModal: FC<NewGroupModalProps> = ({ state, group, onClose }) => {
           </Modal.Header>
           <Modal.Body>
             <Form
-              className="flex flex-col gap-4"
-              id="group-form"
               ref={formRef}
+              id="group-form"
               onSubmit={onSubmit}
+              className="flex flex-col gap-4"
             >
-              <TextField isRequired defaultValue={group?.name} name="name">
+              <TextField name="name" isRequired defaultValue={group?.name}>
                 <Label>分账组名称</Label>
                 <InputGroup variant="secondary">
                   <InputGroup.Input
@@ -95,18 +95,18 @@ const NewGroupModal: FC<NewGroupModalProps> = ({ state, group, onClose }) => {
                 </InputGroup>
                 <FieldError />
               </TextField>
-              <TextField defaultValue={group?.description} name="description">
+              <TextField name="description" defaultValue={group?.description}>
                 <Label>描述</Label>
                 <div className="flex flex-col gap-2">
                   <TextArea
                     aria-describedby="group-description"
+                    variant="secondary"
                     maxLength={DESCRIPTION_MAX_LENGTH}
                     placeholder="添加一些描述信息"
                     rows={4}
-                    variant="secondary"
                     onChange={e => setDescriptionLength(e.target.value.length)}
                   />
-                  <Description className="self-end" id="group-description">
+                  <Description id="group-description" className="self-end">
                     {descriptionLength}
                     /
                     {DESCRIPTION_MAX_LENGTH}
@@ -116,8 +116,8 @@ const NewGroupModal: FC<NewGroupModalProps> = ({ state, group, onClose }) => {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button slot="close" variant="secondary">取消</Button>
-            <Button form="group-form" type="submit">
+            <Button variant="secondary" slot="close">取消</Button>
+            <Button type="submit" form="group-form">
               <Save />
               {group ? '保存修改' : '创建'}
             </Button>

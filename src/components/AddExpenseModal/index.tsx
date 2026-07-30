@@ -101,20 +101,20 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
           </Modal.Header>
           <Modal.Body>
             <Form
-              className="grid grid-cols-1 gap-4 sm:grid-cols-2"
-              id="group-form"
               ref={formRef}
+              id="group-form"
               onSubmit={onSubmit}
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2"
             >
-              <TextField isRequired defaultValue={expense?.title} name="title">
+              <TextField name="title" isRequired defaultValue={expense?.title}>
                 <Label>消费项目</Label>
                 <InputGroup variant="secondary">
                   <InputGroup.Input
                     aria-describedby="expense-title"
-                    className="w-full"
                     maxLength={TITLE_MAX_LENGTH}
                     placeholder="例如：晚餐、打车费"
                     onChange={e => setTitleLength(e.target.value.length)}
+                    className="w-full"
                   />
                   <InputGroup.Suffix className="pr-2">
                     <Description id="expense-title">
@@ -127,12 +127,12 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
                 <FieldError />
               </TextField>
               <NumberField
+                name="amount"
+                variant="secondary"
                 isRequired
                 defaultValue={expense?.amount}
                 maxValue={99999999.99}
                 minValue={0.01}
-                name="amount"
-                variant="secondary"
               >
                 <Label>金额</Label>
                 <NumberField.Group>
@@ -143,12 +143,12 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
                 <FieldError />
               </NumberField>
               <Select
-                isRequired
                 aria-label="付款人"
-                defaultValue={expense?.payerId ?? ''}
                 name="payerId"
-                placeholder="请选择付款人"
                 variant="secondary"
+                isRequired
+                defaultValue={expense?.payerId ?? ''}
+                placeholder="请选择付款人"
               >
                 <Label>付款人</Label>
                 <Select.Trigger>
@@ -162,10 +162,10 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
                       return (
                         <div className="flex items-center gap-2">
                           <Avatar
-                            className="size-4"
                             color="accent"
                             size="sm"
                             variant="soft"
+                            className="size-4"
                           >
                             <Avatar.Fallback className="text-xs">
                               {selectedItem.name.slice(-1).toUpperCase()}
@@ -181,7 +181,7 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
                 <Select.Popover>
                   <ListBox>
                     {peoples?.map(({ id, name }) => (
-                      <ListBox.Item id={id} key={id} textValue={name}>
+                      <ListBox.Item key={id} id={id} textValue={name}>
                         <Avatar color="accent" size="sm" variant="soft">
                           <Avatar.Fallback>{name.slice(-1).toUpperCase()}</Avatar.Fallback>
                         </Avatar>
@@ -195,11 +195,11 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
               </Select>
               <Select
                 aria-label="消费类别"
-                defaultValue={expense?.category ?? '其他'}
-                isRequired
                 name="category"
-                placeholder="请选择消费类别"
                 variant="secondary"
+                isRequired
+                defaultValue={expense?.category ?? '其他'}
+                placeholder="请选择消费类别"
               >
                 <Label>消费类别</Label>
                 <Select.Trigger>
@@ -227,10 +227,10 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
                   <ListBox>
                     {categories?.map(({ value, label, icon: Icon }) => (
                       <ListBox.Item
-                        className="gap-2"
-                        id={value}
                         key={value}
+                        id={value}
                         textValue={label}
+                        className="gap-2"
                       >
                         <Icon className="size-4.5" />
                         <Label>{label}</Label>
@@ -244,9 +244,9 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
               <div className="col-span-2 -mb-2 flex items-center justify-between">
                 <Label isRequired>参与分账的人员</Label>
                 <Checkbox
+                  variant="secondary"
                   isIndeterminate={isIndeterminate}
                   isSelected={isAllSelected}
-                  variant="secondary"
                   onChange={(isSelected: boolean) =>
                     setSelectedParticipants(isSelected ? allParticipantIds : [])}
                 >
@@ -259,9 +259,8 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
                 </Checkbox>
               </div>
               <CheckboxGroup
-                isRequired
-                className="col-span-2"
                 name="participants"
+                isRequired
                 validate={(value) => {
                   if (value.length === 0) {
                     return '请选择参与分账人员'
@@ -270,14 +269,15 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
                 }}
                 value={selectedParticipants}
                 onChange={setSelectedParticipants}
+                className="col-span-2"
               >
                 <div className="mb-2 grid gap-4 sm:grid-cols-2">
                   {peoples.map(({ id, name }) => (
                     <Checkbox
-                      className="mt-0"
                       key={id}
-                      value={id}
                       variant="secondary"
+                      value={id}
+                      className="mt-0"
                     >
                       <Checkbox.Content
                         className={cn(
@@ -300,18 +300,18 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
                 </div>
                 <FieldError />
               </CheckboxGroup>
-              <TextField className="col-span-2" defaultValue={expense?.description} name="description">
+              <TextField name="description" defaultValue={expense?.description} className="col-span-2">
                 <Label>备注（可选）</Label>
                 <div className="flex flex-col gap-2">
                   <TextArea
                     aria-describedby="expense-description"
+                    variant="secondary"
                     maxLength={DESCRIPTION_MAX_LENGTH}
                     placeholder="添加备注信息"
                     rows={4}
-                    variant="secondary"
                     onChange={e => setDescriptionLength(e.target.value.length)}
                   />
-                  <Description className="self-end" id="expense-description">
+                  <Description id="expense-description" className="self-end">
                     {descriptionLength}
                     /
                     {DESCRIPTION_MAX_LENGTH}
@@ -321,10 +321,10 @@ const AddExpenseModal: FC<AddExpenseModalProps> = ({ state, peoples = [], onClos
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button slot="close" variant="secondary">
+            <Button variant="secondary" slot="close">
               取消
             </Button>
-            <Button form="group-form" type="submit">
+            <Button type="submit" form="group-form">
               <Save />
               {expense ? '保存修改' : '添加记录'}
             </Button>

@@ -13,12 +13,12 @@ const themes = [
 const ThemeToggle: FC = () => {
   const { theme, setTheme } = useTheme()
   return (
-    <Tabs className="fixed top-3 right-3 z-50 hidden sm:block" selectedKey={theme} onSelectionChange={key => setTheme(key as string)}>
+    <Tabs selectedKey={theme} onSelectionChange={key => setTheme(key as string)} className="fixed top-3 right-3 z-50 hidden sm:block">
       <Tabs.ListContainer>
         <Tabs.List aria-label="ThemeToggle" className="*:px-1 *:h-6">
           {themes.map(({ key, icon: Icon }) => (
-            <Tabs.Tab id={key} key={key}>
-              <Icon className="size-3.5" fill="currentColor" />
+            <Tabs.Tab key={key} id={key}>
+              <Icon fill="currentColor" className="size-3.5" />
               <Tabs.Indicator />
             </Tabs.Tab>
           ))}

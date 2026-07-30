@@ -73,7 +73,7 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
               <AnimatePresence mode="popLayout">
                 {peoples.map((person, index) => (
                   <motion.div
-                    layout
+                    key={person.id}
                     animate={{
                       opacity: 1,
                       y: 0,
@@ -89,7 +89,7 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
                       y: 10,
                       filter: 'blur(8px)',
                     }}
-                    key={person.id}
+                    layout
                     transition={{ duration: 0.5, delay: 0.2 * index, ease: 'easeOut' }}
                   >
                     <PersonCard person={person} />
@@ -111,14 +111,14 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
             </Modal.Header>
             <Modal.Body>
               <Form
-                className="flex flex-col gap-4"
-                id="person-form"
                 ref={formRef}
+                id="person-form"
                 onSubmit={onSubmit}
+                className="flex flex-col gap-4"
               >
                 <TextField
-                  isRequired
                   name="name"
+                  isRequired
                   validate={(value) => {
                     if (existingNames.includes(value)) {
                       return '该姓名已存在'
@@ -135,8 +135,8 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
               </Form>
             </Modal.Body>
             <Modal.Footer>
-              <Button slot="close" variant="secondary">取消</Button>
-              <Button form="person-form" type="submit">
+              <Button variant="secondary" slot="close">取消</Button>
+              <Button type="submit" form="person-form">
                 添加
               </Button>
             </Modal.Footer>

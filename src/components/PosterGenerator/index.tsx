@@ -93,9 +93,9 @@ const PosterGenerator: FC<PosterGeneratorProps> = ({ group, peoples = [] }) => {
                   <div className="bg-accent mx-auto flex size-16 transform items-center justify-center rounded-full">
                     <ReceiptJapaneseYen className="text-accent-foreground size-6" />
                   </div>
-                  <Typography align="center" type="h3">分账结果</Typography>
-                  <Typography align="center" type="body">{group.name}</Typography>
-                  <Typography align="center" type="body-sm" color="muted">{formatDate(settlementResult.calculatedAt)}</Typography>
+                  <Typography type="h3" align="center">分账结果</Typography>
+                  <Typography type="body" align="center">{group.name}</Typography>
+                  <Typography type="body-sm" color="muted" align="center">{formatDate(settlementResult.calculatedAt)}</Typography>
                 </div>
                 {/* 总览 */}
                 <div className="grid sm:grid-cols-2 gap-3">
@@ -132,7 +132,6 @@ const PosterGenerator: FC<PosterGeneratorProps> = ({ group, peoples = [] }) => {
                         return (
                           <MotionCard
                             key={balance.personId}
-                            layout
                             animate={{
                               opacity: 1,
                               y: 0,
@@ -148,6 +147,7 @@ const PosterGenerator: FC<PosterGeneratorProps> = ({ group, peoples = [] }) => {
                               y: 10,
                               filter: 'blur(8px)',
                             }}
+                            layout
                             transition={{ duration: 0.5, delay: 0.1 * index, ease: 'easeOut' }}
                           >
                             <div className="flex items-center justify-between gap-2 flex-col sm:flex-row">
@@ -191,7 +191,6 @@ const PosterGenerator: FC<PosterGeneratorProps> = ({ group, peoples = [] }) => {
                             {settlementResult.optimalTransfers.map((transfer, index) => (
                               <MotionCard
                                 key={`${transfer.fromPersonId}-${transfer.toPersonId}`}
-                                layout
                                 animate={{
                                   opacity: 1,
                                   y: 0,
@@ -207,6 +206,7 @@ const PosterGenerator: FC<PosterGeneratorProps> = ({ group, peoples = [] }) => {
                                   y: 10,
                                   filter: 'blur(8px)',
                                 }}
+                                layout
                                 transition={{ duration: 0.5, delay: 0.1 * index, ease: 'easeOut' }}
                               >
                                 <div className="flex items-center justify-between gap-4">
@@ -235,7 +235,7 @@ const PosterGenerator: FC<PosterGeneratorProps> = ({ group, peoples = [] }) => {
                     )
                   : null}
                 <Separator className="my-4" />
-                <Typography.Paragraph align="center" color="muted" className="text-xs">
+                <Typography.Paragraph color="muted" align="center" className="text-xs">
                   由
                   {' '}
                   <b>{process.env.NEXT_PUBLIC_APP_NAME}</b>
@@ -247,7 +247,7 @@ const PosterGenerator: FC<PosterGeneratorProps> = ({ group, peoples = [] }) => {
               </Surface>
             </Modal.Body>
             <Modal.Footer>
-              <Button className="w-full" isPending={loading} onPress={handleCapture}>
+              <Button isPending={loading} onPress={handleCapture} className="w-full">
                 {({ isPending }) => (
                   <>
                     {isPending ? <Spinner color="current" size="sm" /> : <Download />}
