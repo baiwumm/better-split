@@ -71,7 +71,7 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
         : (
             <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <AnimatePresence mode="popLayout">
-                {peoples.map(person => (
+                {peoples.map((person, index) => (
                   <motion.div
                     layout
                     animate={{
@@ -90,7 +90,7 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
                       filter: 'blur(8px)',
                     }}
                     key={person.id}
-                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    transition={{ duration: 0.5, delay: 0.2 * index, ease: 'easeOut' }}
                   >
                     <PersonCard person={person} />
                   </motion.div>

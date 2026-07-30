@@ -26,7 +26,7 @@ const SplitDashboard: FC<SplitDashboardProps> = ({ currentGroup }) => {
         {/* 消费记录 */}
         <ExpenseTracking currentGroup={currentGroup} peoples={peoples} />
         {/* 分账结算 */}
-        <SettlementDetails peoples={peoples} />
+        <SettlementDetails currentGroup={currentGroup} peoples={peoples} />
       </div>
     </div>
   )

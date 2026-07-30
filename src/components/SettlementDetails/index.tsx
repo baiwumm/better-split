@@ -1,17 +1,23 @@
-import { Alert, Avatar, Button, Card, cn, Description, Surface, Tabs, Typography } from '@heroui/react'
-import { ArrowRight, Calculator, Check, Image } from 'lucide-react'
+import { Alert, Avatar, Card, cn, Description, Surface, Tabs, Typography } from '@heroui/react'
+import { ArrowRight, Calculator, Check } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 
+import PosterGenerator from '@/components/PosterGenerator'
 import { formatCurrency } from '@/lib/utils'
 import { useAppStore } from '@/store/useAppStore'
 
-import type { Person } from '@/types'
+import type { Group, Person } from '@/types'
 import type { FC } from 'react'
 
+const MotionCard = motion.create(Card)
+const MotionSurface = motion.create(Surface)
+
 interface SettlementDetailsProps {
+  currentGroup: Group
   peoples: Person[]
 }
 
-const SettlementDetails: FC<SettlementDetailsProps> = ({ peoples = [] }) => {
+const SettlementDetails: FC<SettlementDetailsProps> = ({ currentGroup, peoples = [] }) => {
   const { getSettlementResult } = useAppStore()
   const settlementResult = getSettlementResult()
 
@@ -32,10 +38,7 @@ const SettlementDetails: FC<SettlementDetailsProps> = ({ peoples = [] }) => {
             {formatCurrency(settlementResult?.totalAmount ?? 0)}
           </Description>
         </div>
-        <Button size="sm">
-          <Image />
-          生成海报
-        </Button>
+        <PosterGenerator group={currentGroup} peoples={peoples} />
       </div>
       {!settlementResult
         ? (
@@ -60,67 +63,89 @@ const SettlementDetails: FC<SettlementDetailsProps> = ({ peoples = [] }) => {
                 </Tabs.List>
               </Tabs.ListContainer>
               <Tabs.Panel id="balances">
-                <div className="grid gap-4">
-                  {settlementResult.personBalances.map((balance) => {
+                <motion.div layout className="space-y-4">
+                  <AnimatePresence mode="popLayout">
+                    {settlementResult.personBalances.map((balance, index) => {
                     // 使用严格的数值比较，考虑浮点数精度问题
-                    let status: string
-                    let colorClass: string
-                    let displayAmount: string
+                      let status: string
+                      let colorClass: string
+                      let displayAmount: string
 
-                    if (balance.balance > 0.01) {
-                      status = '应收'
-                      colorClass = 'text-success'
-                      displayAmount = `+${formatCurrency(balance.balance)}`
-                    }
-                    else if (balance.balance < -0.01) {
-                      status = '应付'
-                      colorClass = 'text-danger'
-                      displayAmount = formatCurrency(Math.abs(balance.balance))
-                    }
-                    else {
-                      status = '已结清'
-                      colorClass = 'text-muted'
-                      displayAmount = formatCurrency(0)
-                    }
+                      if (balance.balance > 0.01) {
+                        status = '应收'
+                        colorClass = 'text-success'
+                        displayAmount = `+${formatCurrency(balance.balance)}`
+                      }
+                      else if (balance.balance < -0.01) {
+                        status = '应付'
+                        colorClass = 'text-danger'
+                        displayAmount = formatCurrency(Math.abs(balance.balance))
+                      }
+                      else {
+                        status = '已结清'
+                        colorClass = 'text-muted'
+                        displayAmount = formatCurrency(0)
+                      }
 
-                    return (
-                      <Card key={balance.personId}>
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1 min-w-0 flex items-center gap-2">
-                            <Avatar className="shrink-0" color="accent" variant="soft">
-                              <Avatar.Fallback>{getPersonName(balance.personId).slice(-1).toUpperCase()}</Avatar.Fallback>
-                            </Avatar>
-                            <Card.Header className="flex-1 min-w-0">
-                              <Card.Title className="truncate text-base">{getPersonName(balance.personId)}</Card.Title>
-                              <Card.Description className={cn('truncate', colorClass)}>
-                                {status}
-                              </Card.Description>
-                            </Card.Header>
+                      return (
+                        <MotionCard
+                          key={balance.personId}
+                          layout
+                          animate={{
+                            opacity: 1,
+                            y: 0,
+                            filter: 'blur(0px)',
+                          }}
+                          exit={{
+                            opacity: 0,
+                            scale: 0.95,
+                            filter: 'blur(8px)',
+                          }}
+                          initial={{
+                            opacity: 0,
+                            y: 10,
+                            filter: 'blur(8px)',
+                          }}
+                          transition={{ duration: 0.5, delay: 0.1 * index, ease: 'easeOut' }}
+                          className="w-full"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1 min-w-0 flex items-center gap-2">
+                              <Avatar className="shrink-0" color="accent" variant="soft">
+                                <Avatar.Fallback>{getPersonName(balance.personId).slice(-1).toUpperCase()}</Avatar.Fallback>
+                              </Avatar>
+                              <Card.Header className="flex-1 min-w-0">
+                                <Card.Title className="truncate text-base">{getPersonName(balance.personId)}</Card.Title>
+                                <Card.Description className={cn('truncate', colorClass)}>
+                                  {status}
+                                </Card.Description>
+                              </Card.Header>
+                            </div>
+                            <Typography type="h6" className={cn('shrink-0', colorClass)}>
+                              {displayAmount}
+                            </Typography>
                           </div>
-                          <Typography type="h5" className={colorClass}>
-                            {displayAmount}
-                          </Typography>
-                        </div>
-                        <Card.Content>
-                          <div className="grid sm:grid-cols-2 gap-4">
-                            <Surface className="bg-info-soft border border-info rounded-lg px-3 py-2">
-                              <div className="flex items-center justify-between">
-                                <Typography type="body-sm" className="text-info-soft-foreground">总支付</Typography>
-                                <Typography type="body" className="text-info-soft-foreground font-bold">{formatCurrency(balance.totalPaid)}</Typography>
-                              </div>
-                            </Surface>
-                            <Surface className="bg-warning-soft border border-warning rounded-lg px-3 py-2">
-                              <div className="flex items-center justify-between">
-                                <Typography type="body-sm" className="text-warning-soft-foreground">应分摊</Typography>
-                                <Typography type="body" className="text-warning-soft-foreground font-bold">{formatCurrency(balance.totalShare)}</Typography>
-                              </div>
-                            </Surface>
-                          </div>
-                        </Card.Content>
-                      </Card>
-                    )
-                  })}
-                </div>
+                          <Card.Content>
+                            <div className="grid sm:grid-cols-2 gap-4">
+                              <Surface className="bg-info-soft border border-info rounded-lg px-3 py-2">
+                                <div className="flex items-center justify-between">
+                                  <Typography type="body-sm" className="text-info-soft-foreground">总支付</Typography>
+                                  <Typography type="body" className="text-info-soft-foreground font-bold">{formatCurrency(balance.totalPaid)}</Typography>
+                                </div>
+                              </Surface>
+                              <Surface className="bg-warning-soft border border-warning rounded-lg px-3 py-2">
+                                <div className="flex items-center justify-between">
+                                  <Typography type="body-sm" className="text-warning-soft-foreground">应分摊</Typography>
+                                  <Typography type="body" className="text-warning-soft-foreground font-bold">{formatCurrency(balance.totalShare)}</Typography>
+                                </div>
+                              </Surface>
+                            </div>
+                          </Card.Content>
+                        </MotionCard>
+                      )
+                    })}
+                  </AnimatePresence>
+                </motion.div>
               </Tabs.Panel>
               <Tabs.Panel id="transfers">
                 <div className="space-y-4">
@@ -148,30 +173,54 @@ const SettlementDetails: FC<SettlementDetailsProps> = ({ peoples = [] }) => {
                               </Alert.Title>
                             </Alert.Content>
                           </Alert>
-                          {settlementResult.optimalTransfers.map(transfer => (
-                            <Surface key={`${transfer.fromPersonId}-${transfer.toPersonId}`} className="rounded-lg px-3 py-2">
-                              <div className="flex items-center justify-between gap-4">
-                                <div className="flex items-center gap-4">
-                                  <div className="flex items-center gap-2">
-                                    <Avatar color="accent" variant="soft">
-                                      <Avatar.Fallback>{getPersonName(transfer.fromPersonId).slice(-1).toUpperCase()}</Avatar.Fallback>
-                                    </Avatar>
-                                    <Typography type="body-sm">{getPersonName(transfer.fromPersonId)}</Typography>
+                          <motion.div layout className="space-y-4">
+                            <AnimatePresence mode="popLayout">
+                              {settlementResult.optimalTransfers.map((transfer, index) => (
+                                <MotionSurface
+                                  key={`${transfer.fromPersonId}-${transfer.toPersonId}`}
+                                  layout
+                                  animate={{
+                                    opacity: 1,
+                                    y: 0,
+                                    filter: 'blur(0px)',
+                                  }}
+                                  exit={{
+                                    opacity: 0,
+                                    scale: 0.95,
+                                    filter: 'blur(8px)',
+                                  }}
+                                  initial={{
+                                    opacity: 0,
+                                    y: 10,
+                                    filter: 'blur(8px)',
+                                  }}
+                                  transition={{ duration: 0.5, delay: 0.1 * index, ease: 'easeOut' }}
+                                  className="rounded-lg p-3"
+                                >
+                                  <div className="flex items-center justify-between gap-4">
+                                    <div className="flex-1 min-w-0 flex items-center gap-4">
+                                      <div className="flex items-center gap-2 min-w-0">
+                                        <Avatar color="accent" variant="soft">
+                                          <Avatar.Fallback>{getPersonName(transfer.fromPersonId).slice(-1).toUpperCase()}</Avatar.Fallback>
+                                        </Avatar>
+                                        <Typography type="body-sm" className="truncate min-w-0">{getPersonName(transfer.fromPersonId)}</Typography>
+                                      </div>
+                                      <ArrowRight className="text-muted size-5 shrink-0" />
+                                      <div className="flex items-center gap-2 min-w-0">
+                                        <Avatar color="accent" variant="soft">
+                                          <Avatar.Fallback>{getPersonName(transfer.toPersonId).slice(-1).toUpperCase()}</Avatar.Fallback>
+                                        </Avatar>
+                                        <Typography type="body-sm" className="truncate min-w-0">{getPersonName(transfer.toPersonId)}</Typography>
+                                      </div>
+                                    </div>
+                                    <Typography type="h6" className="text-danger shrink-0">
+                                      {formatCurrency(transfer.amount)}
+                                    </Typography>
                                   </div>
-                                  <ArrowRight className="text-muted size-6" />
-                                  <div className="flex items-center gap-2">
-                                    <Avatar color="accent" variant="soft">
-                                      <Avatar.Fallback>{getPersonName(transfer.toPersonId).slice(-1).toUpperCase()}</Avatar.Fallback>
-                                    </Avatar>
-                                    <Typography type="body-sm">{getPersonName(transfer.toPersonId)}</Typography>
-                                  </div>
-                                </div>
-                                <Typography type="h5" className="text-danger">
-                                  {formatCurrency(transfer.amount)}
-                                </Typography>
-                              </div>
-                            </Surface>
-                          ))}
+                                </MotionSurface>
+                              ))}
+                            </AnimatePresence>
+                          </motion.div>
                         </>
                       )}
                 </div>

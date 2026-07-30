@@ -2,6 +2,7 @@
 
 import { Alert, Button, Description, Typography, useOverlayState } from '@heroui/react'
 import { Plus, ReceiptJapaneseYen } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 
 import AddExpenseModal from '@/components/AddExpenseModal'
@@ -74,21 +75,39 @@ const ExpenseTracking: FC<ExpenseTrackingProps> = ({ currentGroup, peoples = [] 
             </div>
           )
         : (
-            <div className="space-y-4">
-              {currentGroup.expenses.map(expense => (
-                <ExpenseCard
-                  expense={expense}
-                  key={expense.id}
-                  peoples={peoples}
-                  onEdit={handleEditExpense}
-                />
-              ))}
-            </div>
+            <motion.div layout className="space-y-4">
+              <AnimatePresence mode="popLayout">
+                {currentGroup.expenses.map((expense, index) => (
+                  <motion.div
+                    layout
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      filter: 'blur(0px)',
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.95,
+                      filter: 'blur(8px)',
+                    }}
+                    initial={{
+                      opacity: 0,
+                      y: 10,
+                      filter: 'blur(8px)',
+                    }}
+                    key={expense.id}
+                    transition={{ duration: 0.5, delay: 0.2 * index, ease: 'easeOut' }}
+                  >
+                    <ExpenseCard expense={expense} peoples={peoples} onEdit={handleEditExpense} />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
           )}
       {/* 消费表单 */}
       <AddExpenseModal
         expense={editingExpense}
-        key={editingExpense?.id ?? 'create'}
+        key={editingExpense?.id ?? `create-${peoples.length}`}
         peoples={peoples}
         state={state}
         onClose={() => setEditingExpense(null)}

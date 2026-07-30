@@ -62,8 +62,8 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
       <Card.Content className="space-y-3">
         {/* 付款人信息 */}
         <div className="flex items-center gap-4">
-          <Label>付款人:</Label>
-          <div className="flex items-center gap-2">
+          <Label className="shrink-0">付款人:</Label>
+          <div className="flex-1 min-w-0 flex items-center gap-2">
             <Avatar color="success" variant="soft">
               <Avatar.Fallback>
                 {payer?.name.slice(-1).toUpperCase()}
@@ -74,8 +74,8 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
         </div>
         {/* 参与者信息 */}
         <div className="flex items-center gap-4">
-          <Label>参与者:</Label>
-          <div className="flex -space-x-1">
+          <Label className="shrink-0">参与者:</Label>
+          <div className="flex-1 min-w-0 flex -space-x-1">
             {participants.slice(0, MAX_PEOPLE_TO_SHOW).map(participant => (
               <Avatar className="ring-2 ring-background" key={participant.id}>
                 <Avatar.Fallback>
@@ -98,7 +98,7 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
       <Card.Footer className="flex-col gap-3 items-start">
         {/* 分摊信息 */}
         <div className="flex items-center justify-between gap-4 w-full">
-          <div className="flex flex-col gap-2">
+          <div className="flex-1 min-w-0 flex flex-col gap-2">
             <Description>
               人均分摊：
               {formatCurrency(amountPerPerson)}
@@ -111,9 +111,8 @@ const ExpenseCard: FC<ExpenseCardProps> = ({ peoples = [], expense, onEdit }) =>
               </Description>
             )}
           </div>
-          <Description>
+          <Description className="shrink-0">
             {participants.length}
-            {' '}
             人参与
           </Description>
         </div>
