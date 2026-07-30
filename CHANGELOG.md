@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.3](https://github.com/baiwumm/better-split/compare/2.0.2...2.0.3) (2026-07-30)
+
+### 🎫 Chores | 其他更新
+
+* 完善应用配置 ([8c20f74](https://github.com/baiwumm/better-split/commit/8c20f74056c72ba6ff49369d17bc6e073f7825bd))
+
 ## [2.0.2](https://github.com/baiwumm/better-split/compare/2.0.0...2.0.2) (2026-07-30)
 
 ### ✨ Features | 新功能
