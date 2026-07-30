@@ -28,8 +28,8 @@ import type { Expense, ExpenseFormData, Person } from '@/types'
 import type { UseOverlayStateReturn } from '@heroui/react'
 import type { FC, FormEvent } from 'react'
 
-const TITLE_MAX_LENGTH = 50
-const DESCRIPTION_MAX_LENGTH = 100
+const TITLE_MAX_LENGTH = 20
+const DESCRIPTION_MAX_LENGTH = 50
 
 interface AddExpenseModalProps {
   state: UseOverlayStateReturn

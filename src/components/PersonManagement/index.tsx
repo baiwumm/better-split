@@ -128,7 +128,7 @@ const PersonManagement: FC<PersonManagementProps> = ({ peoples = [] }) => {
                 >
                   <Label>姓名</Label>
                   <InputGroup variant="secondary">
-                    <InputGroup.Input aria-describedby="成员姓名" maxLength={20} placeholder="输入成员姓名" />
+                    <InputGroup.Input aria-describedby="成员姓名" maxLength={10} placeholder="输入成员姓名" />
                   </InputGroup>
                   <FieldError />
                 </TextField>

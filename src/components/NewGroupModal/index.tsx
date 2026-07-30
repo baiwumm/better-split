@@ -10,8 +10,8 @@ import type { Group } from '@/types'
 import type { UseOverlayStateReturn } from '@heroui/react'
 import type { FC, FormEvent } from 'react'
 
-const NAME_MAX_LENGTH = 50
-const DESCRIPTION_MAX_LENGTH = 100
+const NAME_MAX_LENGTH = 10
+const DESCRIPTION_MAX_LENGTH = 50
 
 interface NewGroupModalProps {
   state: UseOverlayStateReturn
