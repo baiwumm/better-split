@@ -4,7 +4,6 @@
   <p align="center">
     让聚餐、旅行、聚会的费用分摊变得简单透明，自动计算最优转账方案，告别复杂的账目计算
   </p>
-  <br />
   <p align="center">
     <img src="https://img.shields.io/badge/Next-16.0-black?style=flat&logo=Next.js" alt="Next.js">
     <img src="https://img.shields.io/github/stars/baiwumm/better-split?style=social" alt="GitHub stars" />
