@@ -13,14 +13,18 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: `${process.env.NEXT_PUBLIC_APP_NAME} - ${process.env.NEXT_PUBLIC_APP_TITLE}`,
   description: process.env.NEXT_PUBLIC_APP_DESC,
-  applicationName: process.env.NEXT_PUBLIC_APP_NAME, // 应用名称
-  authors: { name: pkg.author.name, url: pkg.author.url },
-  keywords: process.env.NEXT_PUBLIC_APP_KEYWORDS,
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
-  },
+
+  applicationName: process.env.NEXT_PUBLIC_APP_NAME,
+
+  authors: [
+    {
+      name: pkg.author.name,
+      url: pkg.author.url,
+    },
+  ],
+
+  keywords: process.env.NEXT_PUBLIC_APP_KEYWORDS?.split(','),
+
   openGraph: {
     type: 'website',
     locale: 'zh_CN',
@@ -28,7 +32,15 @@ export const metadata: Metadata = {
     title: process.env.NEXT_PUBLIC_APP_NAME,
     description: process.env.NEXT_PUBLIC_APP_DESC,
     siteName: process.env.NEXT_PUBLIC_APP_NAME,
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/og.png`,
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
+
   twitter: {
     card: 'summary_large_image',
     title: process.env.NEXT_PUBLIC_APP_NAME,
