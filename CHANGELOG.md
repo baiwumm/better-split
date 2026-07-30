@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.5](https://github.com/baiwumm/better-split/compare/2.0.4...2.0.5) (2026-07-30)
+
+### 🎫 Chores | 其他更新
+
+* update README.md ([3ddcff8](https://github.com/baiwumm/better-split/commit/3ddcff87795bf7c7a657ab17f68d6119a90e9aa6))
+
 ## [2.0.4](https://github.com/baiwumm/better-split/compare/2.0.3...2.0.4) (2026-07-30)
 
 ### 🎫 Chores | 其他更新
