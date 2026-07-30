@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.1](https://github.com/baiwumm/better-split/compare/2.0.0...2.0.1) (2026-07-30)
+
+### ✨ Features | 新功能
+
+* update README.md ([9642504](https://github.com/baiwumm/better-split/commit/96425041dbf5ee148e2a22ba1960d714e0ddaeeb))
+
 ## [2.0.0](https://github.com/baiwumm/better-split/compare/1.0.0...2.0.0) (2026-07-30)
 
 ### ✨ Features | 新功能
