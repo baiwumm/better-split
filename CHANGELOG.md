@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.6](https://github.com/baiwumm/better-split/compare/2.0.5...2.0.6) (2026-07-31)
+
+### 🎫 Chores | 其他更新
+
+* 更新 og 图片 ([60216b6](https://github.com/baiwumm/better-split/commit/60216b6d9e64ed817e87560de7518f11b01a2dc6))
+* update README.md ([07d41a3](https://github.com/baiwumm/better-split/commit/07d41a3e9ec90c5c69fa0b715dc01618da5ccb61))
+* update README.md ([3b026f6](https://github.com/baiwumm/better-split/commit/3b026f616ce20feeebacab38417340c513629e12))
+
 ## [2.0.5](https://github.com/baiwumm/better-split/compare/2.0.4...2.0.5) (2026-07-30)
 
 ### 🎫 Chores | 其他更新
