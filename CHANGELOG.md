@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.7](https://github.com/baiwumm/better-split/compare/2.0.6...2.0.7) (2026-08-03)
+
+### 💄 Styles | 风格
+
+* **eslint:** 新增 object-curly-newline 规则 ([9800fcb](https://github.com/baiwumm/better-split/commit/9800fcb28604e3010663411e616746907ccbc238))
+
 ## [2.0.6](https://github.com/baiwumm/better-split/compare/2.0.5...2.0.6) (2026-07-31)
 
 ### 🎫 Chores | 其他更新
