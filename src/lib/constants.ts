@@ -1,4 +1,11 @@
-import { CarTaxiFront, Ellipsis, Gamepad2, Hotel, ShoppingCart, Utensils } from 'lucide-react'
+import {
+  CarTaxiFront,
+  Ellipsis,
+  Gamepad2,
+  Hotel,
+  ShoppingCart,
+  Utensils,
+} from 'lucide-react'
 
 export const categories = [
   { value: '餐饮', label: '餐饮', icon: Utensils },
