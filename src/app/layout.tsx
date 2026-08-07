@@ -11,6 +11,7 @@ import pkg from '#/package.json'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://split.baiwumm.com'),
   title: `${process.env.NEXT_PUBLIC_APP_NAME} - ${process.env.NEXT_PUBLIC_APP_TITLE}`,
   description: process.env.NEXT_PUBLIC_APP_DESC,
 
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
     siteName: process.env.NEXT_PUBLIC_APP_NAME,
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_APP_URL}/og.png`,
+        url: `${process.env.NEXT_PUBLIC_APP_URL}/opengraph-image`,
         width: 1200,
         height: 630,
       },
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: process.env.NEXT_PUBLIC_APP_NAME,
     description: process.env.NEXT_PUBLIC_APP_DESC,
-    images: [`${process.env.NEXT_PUBLIC_APP_URL}/og.png`],
+    images: [`${process.env.NEXT_PUBLIC_APP_URL}/opengraph-image`],
     creator: pkg.author.name,
   },
 }
@@ -59,7 +60,7 @@ export default function RootLayout({
     <html lang="zh-CN" suppressHydrationWarning>
       <head>
         <meta name="apple-mobile-web-app-title" content={process.env.NEXT_PUBLIC_APP_NAME} />
-        <link href="https://cdn.baiwumm.com/fonts/MapleMono-CN-Regular/result.css" rel="stylesheet" />
+        <link href="https://cn-font.claude-code-best.win/packages/maple-mono-cn/dist/MapleMono-CN-Regular/result.css" rel="stylesheet" />
         <Analytics />
       </head>
       <body className="bg-background text-foreground">
