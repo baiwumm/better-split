@@ -43,3 +43,5 @@ next-env.d.ts
 # reasonix
 /.reasonix/
 reasonix.toml
+# heroui-agents-md
+.heroui-docs/
