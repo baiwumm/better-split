@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.8](https://github.com/baiwumm/better-split/compare/2.0.7...2.0.8) (2026-08-07)
+
+### 🎫 Chores | 其他更新
+
+* 集成 HeroUI skills 与 agents 文档 ([cad339a](https://github.com/baiwumm/better-split/commit/cad339aa1bf23e25d60dca1bb4b58b8f0d2158b3))
+* ignore Reasonix runtime directory and config file ([c5ac7ca](https://github.com/baiwumm/better-split/commit/c5ac7ca9aebf781510289caddea42387bcdb10e7))
+
+### ♻ Code Refactoring | 代码重构
+
+* replace static og.png with dynamic opengraph-image and align font CDN ([4ee2fe4](https://github.com/baiwumm/better-split/commit/4ee2fe4938531eef04c6bd89fa439bc8231f12bd))
+
 ## [2.0.7](https://github.com/baiwumm/better-split/compare/2.0.6...2.0.7) (2026-08-03)
 
 ### 💄 Styles | 风格
